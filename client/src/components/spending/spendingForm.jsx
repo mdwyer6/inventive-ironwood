@@ -1,4 +1,7 @@
-var SpendingForm = (props) => (
+import React from 'react';
+
+var SpendingForm = (props) => {
+  return (
   <form className='form-inline' onSubmit={props.submit}>
     <h3>Add Transaction</h3>
     <div className='form-group'>
@@ -22,10 +25,12 @@ var SpendingForm = (props) => (
     </div>
     <button type="submit" className="btn btn-success">Submit</button>
   </form>
-);
+  );
+} 
 
 SpendingForm.prototypes = {
   list: React.PropTypes.object.isRequired
 };
 
-window.SpendingForm = SpendingForm;
+
+module.exports = SpendingForm;

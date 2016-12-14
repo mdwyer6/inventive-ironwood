@@ -1,3 +1,9 @@
+import React from 'react';
+import SpendingList from './spending/spendingList.jsx';
+import OwesList from './owes/owesList.jsx';
+import Sidebar from './sidebar.jsx';
+import Requests from './requests.js'
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -57,7 +63,7 @@ class App extends React.Component {
       url: 'transactions'
     };
 
-    postReq(spendingData);
+    Requests.postReq(spendingData);
 
     this.props.getReq({url: 'transactions'}, this.loadTrans.bind(this));
 
@@ -81,7 +87,7 @@ class App extends React.Component {
       url: 'debts'
     };
 
-    postReq(owesLoansData);
+    Requests.postReq(owesLoansData);
 
     this.props.getReq({url: 'debts'}, this.loadDebts.bind(this));
   }
@@ -101,4 +107,4 @@ class App extends React.Component {
   }
 
 }
-window.App = App;
+module.exports = App;

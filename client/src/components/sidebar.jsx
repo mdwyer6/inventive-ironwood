@@ -1,4 +1,7 @@
-var Sidebar = (props) => (
+import React from 'react';
+
+var Sidebar = (props) => {
+  return (
   <ul className="sidebar-nav">
     <li className="sidebar-brand">
       <a href="#">Money.io</a>
@@ -29,5 +32,6 @@ var Sidebar = (props) => (
     </li>
   </ul>
 );
+}; 
 
-window.Sidebar = Sidebar;
+module.exports = Sidebar

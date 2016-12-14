@@ -53,6 +53,8 @@ var pickCategories = (category) => {
   }
 }
 
-window.postReq = postReq;
-window.getReq = getReq;
-window.pickCategories = pickCategories;
+module.exports = {
+  postReq: postReq,
+  getReq: getReq,
+  pickCategories: pickCategories
+}
