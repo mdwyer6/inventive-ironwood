@@ -30,5 +30,8 @@ app.post('/transactions', handler.transactions);
 app.get('/transactions', handler.getTransactions);
 app.post('/debts', handler.debts);
 app.get('/debts', handler.getDebts);
+app.get('*', function (req, res) {
+  res.sendFile(path.resolve(__dirname + '/newClient/index.html'));
+});
 
 module.exports = app;
