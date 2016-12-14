@@ -128,3 +128,12 @@ exports.debts = function(req, res) {
       res.send('Done');
     });
 };
+
+// exports.removeTransaction = function(req, res) {
+//   var person = req.body.person;
+//   var user_id = req.session.user.id;
+//   var title = req.body.title;
+
+
+//   new Spending({person: person, user_id: user_id, title: title}).destroy();
+// }

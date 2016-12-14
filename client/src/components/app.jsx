@@ -72,6 +72,19 @@ class App extends React.Component {
     }
   }
 
+  // deleteTransaction(e) {
+  //   e.preventDefault();
+    
+  //   var data = {
+  //     url: 'transactions',
+  //     //don't know how this works
+  //     title: e.target.children[2].children[0].value
+  //   };
+  //   postReq(data);
+  //   this.props.getReq({url: 'transactions'}, this.loadTrans.bind(this));
+
+  // }
+
   submitOwesLoans(e) {
     e.preventDefault();
     var owesLoansData = {
@@ -95,6 +108,7 @@ class App extends React.Component {
         <div id='page-content-wrapper'>
           <h1 className='appTitle'><strong>Money</strong>.io</h1>
           {this.state.curr}
+          <BudgetForm />
         </div>
       </div>
     );

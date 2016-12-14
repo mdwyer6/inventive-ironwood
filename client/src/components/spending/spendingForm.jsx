@@ -14,7 +14,7 @@ var SpendingForm = (props) => (
       </select>
     </div>
     <div className="form-group">
-      <input type="text" className="form-control" placeholder="Spending"/>
+      <input type="text" className="form-control" placeholder="Title"/>
     </div>
     <div className="input-group">
       <div className="input-group-addon">$</div>
