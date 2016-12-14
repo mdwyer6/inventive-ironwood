@@ -30,6 +30,7 @@ app.post('/transactions', handler.transactions);
 app.get('/transactions', handler.getTransactions);
 app.post('/debts', handler.debts);
 app.get('/debts', handler.getDebts);
+app.post('/budget', handler.createBudget);
 
 
 app.get('/users/:userStr', handler.filterUsers);

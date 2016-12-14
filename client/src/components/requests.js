@@ -1,5 +1,6 @@
 var postReq = (options, callback) => {
   // TODO
+  console.log('postReq hit');
   $.ajax({
   // This is the url you should use to communicate with the parse API server.
     url: 'http://127.0.0.1:8000/' + options.url,
