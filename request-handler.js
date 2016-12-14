@@ -28,9 +28,6 @@ exports.signin = function(req, res, next) {
       if (user.attributes.password === password) {
         req.session.regenerate(function() {
           req.session.user = user;
-          console.log('successful log in');
-          var param = {};
-          console.log('HEEEY LMAO');
           res.location('/');
           res.redirect('/');
           next();
@@ -65,7 +62,7 @@ exports.signup = function(req, res) {
 
 exports.check = function(req, res, next) {
   console.log('Session user is: ', req.session.user);
-  if (req.session.user === undefined && (req.originalUrl === '/')) {
+  if (!req.session.user) {
     res.redirect('/signin');
   } else {
     next();
