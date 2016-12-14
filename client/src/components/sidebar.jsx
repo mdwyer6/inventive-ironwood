@@ -1,6 +1,7 @@
 import React from 'react';
 
-var Sidebar = (props) => (
+var Sidebar = (props) => {
+  return (
   <ul className="sidebar-nav">
     <li className="sidebar-brand">
       <a href="#">Money.io</a>
@@ -31,5 +32,6 @@ var Sidebar = (props) => (
     </li>
   </ul>
 );
+}; 
 
 module.exports = Sidebar

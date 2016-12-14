@@ -2,7 +2,8 @@ import React from 'react';
 import SpendingForm from './spendingForm.jsx';
 import SpendingListEntry from './spendingListEntry.jsx';
 
-var SpendingList = (props) => (
+var SpendingList = (props) => {
+  return (
   <div className="spending">
     <h2>Transactions</h2>
     <table className="table">
@@ -20,7 +21,8 @@ var SpendingList = (props) => (
     </table>
     <SpendingForm submit={props.submit}/>
   </div>
-);
+  );
+}
 
 SpendingList.prototypes = {
   list: React.PropTypes.array.isRequired

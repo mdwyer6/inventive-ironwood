@@ -1,6 +1,7 @@
 import React from 'react';
 
-var LoansForm = (props) => (
+var LoansForm = (props) => {
+  return (
   <form className='form-inline' onSubmit={props.submitOwesLoans}>
     <h3>Add Loans</h3>
     <div className="form-group">
@@ -15,7 +16,8 @@ var LoansForm = (props) => (
     </div>
     <button type="submit" className="btn btn-primary">Submit</button>
   </form>
-);
+  );
+} 
 
 LoansForm.prototypes = {
   list: React.PropTypes.object.isRequired
