@@ -1,3 +1,7 @@
+import React from 'react';
+import SpendingForm from './spendingForm.jsx';
+import SpendingListEntry from './spendingListEntry.jsx';
+
 var SpendingList = (props) => (
   <div className="spending">
     <h2>Transactions</h2>
@@ -22,4 +26,4 @@ SpendingList.prototypes = {
   list: React.PropTypes.array.isRequired
 };
 
-window.SpendingList = SpendingList;
+module.exports = SpendingList;

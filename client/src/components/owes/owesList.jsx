@@ -1,3 +1,8 @@
+import React from 'react';
+import DuesForm from './duesForm.jsx';
+import LoansForm from './loansForm.jsx';
+import OwesListEntry from './OwesListEntry.jsx';
+
 var OwesList = (props) => (
   <div className="owes">
     <h2>Dues</h2>
@@ -25,4 +30,4 @@ OwesList.prototypes = {
   list: React.PropTypes.array.isRequired
 };
 
-window.OwesList = OwesList;
+module.exports = OwesList;

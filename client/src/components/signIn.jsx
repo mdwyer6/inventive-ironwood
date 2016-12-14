@@ -1,3 +1,5 @@
+import React from 'react';
+
 var signIn = (props) => (
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-3 form-box">
@@ -27,4 +29,4 @@ var signIn = (props) => (
                     </div>
 );
 
-window.signIn = signIn;
+module.exports = signIn;

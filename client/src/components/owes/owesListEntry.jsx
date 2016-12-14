@@ -1,3 +1,6 @@
+import React from 'react';
+import moment from 'moment';
+
 var OwesListEntry = (props) => (
   <tr>
     <td>{props.entry.person}</td>
@@ -27,4 +30,4 @@ OwesListEntry.protoTypes = {
   entry: React.PropTypes.object.isRequired
 };
 
-window.OwesListEntry = OwesListEntry;
+module.exports = OwesListEntry;
