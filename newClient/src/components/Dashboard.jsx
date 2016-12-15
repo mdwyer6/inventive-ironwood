@@ -1,6 +1,8 @@
 import React from 'react';
 import $ from 'jquery';
 
+import Sidebar from './sidebar.jsx';
+
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -23,8 +25,13 @@ class Dashboard extends React.Component {
 
   render() {
     return (
-      <div>
-        {this.props.children && React.cloneElement.call(this, this.props.children)}
+      <div id="wrapper" className="app">
+        <div id='sidebar-wrapper'>
+            <Sidebar />
+        </div>
+        <div>
+          {this.props.children && React.cloneElement.call(this, this.props.children)}
+        </div>
       </div>
     );
   }
