@@ -118,10 +118,48 @@ exports.debts = function(req, res) {
   var person = req.body.person;
   var amount = req.body.amount;
   // var userID = req.session.user.id;
-  console.log('id',req.session.user.id);
+  console.log('id', req.session.user.id);
   var personID;
   Debts.create({type: type, amount: amount, person: person, user_id: req.session.user.id})
     .then(function() {
       res.send('Done');
     });
 };
+
+exports.filterUsers = function(req, res) {
+  var userStr = req.params.userStr.toLowerCase();
+  new User().query('where', 'username', 'like', userStr + '%')
+    .fetchAll()
+    .then(function(users) {
+      res.json(users);
+    });
+};
+
+exports.createLoan = function(req, res) {
+  console.log('loanAmount', req.body.loanAmount);
+  if (req.body.type === 'loan') {
+    var lender = req.session.user.username;
+    var borrower = req.body.otherUser;
+    var status = 'borrowerConfirm';
+  } else {
+    var lender = req.body.otherUser;
+    var borrower = req.session.user.username;
+    var status = 'lenderConfirm';
+
+  }
+  new User({username: lender}).fetch().then(function(lender) {
+    new User({username: borrower}).fetch().then(function(borrower) {
+      lender.loansToCollect()
+        .attach({borrowerId: borrower.id, status: req.body.status, loanAmount: req.body.loanAmount, memo: req.body.memo})
+        .then(function(collection) {
+          res.end();
+        });
+    });
+  });
+};
+
+
+
+
+
+
