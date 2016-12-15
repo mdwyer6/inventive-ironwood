@@ -56,6 +56,7 @@ db.knex.schema.hasTable('loans').then(function(exists) {
       table.integer('lenderId').references('users.id');
       table.integer('borrowerId').references('users.id');
       table.string('status');
+      table.string('memo');
       table.float('loanAmount');
       table.float('balanceDue');
       table.timestamps();
