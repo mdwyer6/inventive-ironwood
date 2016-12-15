@@ -49,4 +49,36 @@ db.knex.schema.hasTable('debts').then(function(exists) {
   }
 });
 
+db.knex.schema.hasTable('loans').then(function(exists) {
+  if (!exists) {
+    db.knex.schema.createTable('loans', function (table) {
+      table.increments('id').primary();
+      table.integer('lenderId').references('users.id');
+      table.integer('borrowerId').references('users.id');
+      table.string('status');
+      table.string('memo');
+      table.float('loanAmount');
+      table.float('balanceDue');
+      table.timestamps();
+    }).then(function (table) {
+      console.log('Created Table', table);
+    });
+  }
+});
+
+db.knex.schema.hasTable('loanPayments').then(function(exists) {
+  if (!exists) {
+    db.knex.schema.createTable('loanPayments', function (table) {
+      table.increments('id').primary();
+      table.integer('loanId').references('loans.id');
+      table.string('status');
+      table.float('paymentAmount');
+      table.dateTime('paymentDate');
+      table.timestamps();
+    }).then(function (table) {
+      console.log('Created Table', table);
+    });
+  }
+});
+
 module.exports = db;

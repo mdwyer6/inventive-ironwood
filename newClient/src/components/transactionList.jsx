@@ -1,8 +1,8 @@
 import React from 'react';
-import SpendingForm from './spendingForm.jsx';
-import SpendingListEntry from './spendingListEntry.jsx';
+import TransactionForm from './transactionForm.jsx';
+import TransactionListEntry from './transactionListEntry.jsx';
 
-var SpendingList = (props) => {
+var TransactionList = (props) => {
   return (
   <div className="spending">
     <h2>Transactions</h2>
@@ -17,16 +17,16 @@ var SpendingList = (props) => {
         </tr>
       </thead>
       <tbody>
-      {props.list.map(owes => <SpendingListEntry entry={owes} />)}
+      {props.list.map(owes => <TransactionListEntry entry={owes} />)}
       </tbody>
     </table>
-    <SpendingForm submit={props.submit}/>
+    <TransactionForm submit={props.submit}/>
   </div>
   );
 }
 
-SpendingList.prototypes = {
+TransactionList.prototypes = {
   list: React.PropTypes.array.isRequired
 };
 
-module.exports = SpendingList;
+module.exports = TransactionList;

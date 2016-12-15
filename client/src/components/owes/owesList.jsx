@@ -1,4 +1,10 @@
-var OwesList = (props) => (
+import React from 'react';
+import DuesForm from './duesForm.jsx';
+import LoansForm from './loansForm.jsx';
+import OwesListEntry from './OwesListEntry.jsx';
+
+var OwesList = (props) => {
+  return (
   <div className="owes">
     <h2>Dues</h2>
     <table className="table">
@@ -20,9 +26,10 @@ var OwesList = (props) => (
     <LoansForm submitOwesLoans={props.submitOwesLoans}/>
   </div>
 );
+} 
 
 OwesList.prototypes = {
   list: React.PropTypes.array.isRequired
 };
 
-window.OwesList = OwesList;
+module.exports = OwesList;

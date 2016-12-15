@@ -1,4 +1,7 @@
-var DuesForm = (props) => (
+import React from 'react';
+
+var DuesForm = (props) => {
+  return (
   <form className='form-inline' onSubmit={props.submitOwesLoans}>
     <h3>Add Dues</h3>
     <div className="form-group">
@@ -13,10 +16,11 @@ var DuesForm = (props) => (
     </div>
     <button type="submit" className="btn btn-primary">Submit</button>
   </form>
-);
+  );
+} 
 
 DuesForm.prototypes = {
   list: React.PropTypes.object.isRequired
 };
 
-window.DuesForm = DuesForm;
+module.exports = DuesForm
