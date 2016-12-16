@@ -9,10 +9,10 @@ var User = db.Model.extend({
   hidden: ['password', 'email'],
 
   loansToCollect: function() {
-    return this.belongsToMany(User, 'loans', 'lenderId', 'borrowerId').withPivot(['status', 'loanAmount', 'balanceDue', 'memo']);
+    return this.belongsToMany(User, 'loans', 'lenderId', 'borrowerId').withPivot(['date', 'status', 'loanAmount', 'balanceDue', 'memo']);
   },
   loansToPayback: function() {
-    return this.belongsToMany(User, 'loans', 'borrowerId', 'lenderId').withPivot(['status', 'loanAmount', 'balanceDue', 'memo']);
+    return this.belongsToMany(User, 'loans', 'borrowerId', 'lenderId').withPivot(['date', 'status', 'loanAmount', 'balanceDue', 'memo']);
   }
 });
 

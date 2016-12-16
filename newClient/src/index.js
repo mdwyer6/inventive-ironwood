@@ -6,6 +6,7 @@ import auth from './auth.js';
 import App from './components/app.jsx';
 import CreateLoanForm from './components/createLoanForm.jsx';
 import Dashboard from './components/Dashboard.jsx';
+import LoanList from './components/LoanList.jsx';
 import Signin from './components/Signin.jsx';
 import Signup from './components/Signup.jsx';
 import NotFound from './components/NotFound.jsx';
@@ -33,6 +34,8 @@ ReactDOM.render(
         <Route path="/transactions" component={Transactions} />
         <Route path="/debts" component={Debts} />
         <Route path="/budget" component={Budget} />
+        <Route path="/createLoan" component={CreateLoanForm} />
+        <Route path='/loans' component={LoanList} />
       </Route>
       <Route path="/signin" component={Signin} />
       <Route path="/signup" component={Signup} />
