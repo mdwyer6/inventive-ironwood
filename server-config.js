@@ -37,8 +37,10 @@ app.get('/api/debts', handler.getDebts);
 app.post('/api/budget', handler.createBudget);
 
 
-app.get('/api/users/:userStr', handler.filterUsers);
-app.post('/api/loans', handler.createLoan);
+
+app.get('/users/:userStr', handler.filterUsers);
+app.post('/loans', handler.createLoan);
+app.get('/api/loans/:which', handler.getLoansByType);
 
 app.get('*', function (req, res) {
   res.sendFile(path.resolve(__dirname + '/newClient/index.html'));

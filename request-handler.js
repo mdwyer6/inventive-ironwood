@@ -190,3 +190,26 @@ exports.createLoan = function(req, res) {
   });
 };
 
+
+exports.getLoansByType = function(req, res) {
+  var whichLoans = req.params.which;
+  if (whichLoans === 'toCollect') {
+    var relatedStr = 'loansToCollect';
+  } else if (whichLoans === 'toPayback') {
+    var relatedStr = 'loansToPayback';
+  }
+  var userId = req.session.user.id;
+  new User({id: userId})
+    .fetch({withRelated: ['loansToCollect', 'loansToPayback']})
+    .then(function(user) {
+      res.json(user.related(relatedStr).toJSON());
+    });
+};
+
+
+
+
+
+
+
+
