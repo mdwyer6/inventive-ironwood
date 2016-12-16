@@ -3,6 +3,11 @@ var db = require('../config');
 var User = db.Model.extend({
 
   tableName: 'users',
+
+  // https://github.com/tgriesser/bookshelf/wiki/Plugin:-Visibility
+  // Hide password on .toJSON for relational query
+  hidden: ['password', 'email'],
+
   loansToCollect: function() {
     return this.belongsToMany(User, 'loans', 'lenderId', 'borrowerId').withPivot(['status', 'loanAmount', 'balanceDue', 'memo']);
   },
