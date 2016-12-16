@@ -24,19 +24,18 @@ exports.signin = function(req, res, next) {
   var password = req.body.password;
   new User({username: username }).fetch().then(function(user) {
     if (!user) {
-      console.log('invalid username');
-      res.redirect('/signin');
+      console.log('user not found');
+      res.sendStatus(403);
     } else {
       if (user.attributes.password === password) {
         req.session.regenerate(function() {
           req.session.user = user;
-          res.location('/');
-          res.redirect('/');
-          next();
+          // res.location('/');
+          res.json({authenticated: true});
         });
       } else {
-        console.log('incorrect password');
-        res.redirect('/signin');
+        console.log('password not correct');
+        res.sendStatus(403);
       }
     }
   });
@@ -168,7 +167,7 @@ exports.filterUsers = function(req, res) {
 };
 
 exports.createLoan = function(req, res) {
-  console.log('loanAmount', req.body.loanAmount);
+  console.log('loanAmount', req.session.user.username);
   if (req.body.type === 'loan') {
     var lender = req.session.user.username;
     var borrower = req.body.otherUser;
@@ -182,7 +181,7 @@ exports.createLoan = function(req, res) {
   new User({username: lender}).fetch().then(function(lender) {
     new User({username: borrower}).fetch().then(function(borrower) {
       lender.loansToCollect()
-        .attach({borrowerId: borrower.id, status: req.body.status, loanAmount: req.body.loanAmount, memo: req.body.memo})
+        .attach({borrowerId: borrower.id, status: status, loanAmount: req.body.loanAmount, memo: req.body.memo})
         .then(function(collection) {
           res.end();
         });

@@ -1,15 +1,27 @@
 import React from 'react';
-import { Link } from 'react-router';
+import auth from '../auth.js';
+import { Link, browserHistory } from 'react-router';
 
 class Signin extends React.Component {
   constructor(props) {
     super(props);
     this.updateFormState = this.updateFormState.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
     this.state = {
       username: null,
       password: null,
       error: false
     };
+  }
+
+  handleLogin(e) {
+    e.preventDefault();
+    auth.login(this.state.username, this.state.password, (loggedIn) => {
+      if (!loggedIn) {
+        return this.setState({error: true});
+      }
+      browserHistory.push('/home');
+    });
   }
 
   updateFormState(e) {
@@ -35,7 +47,7 @@ class Signin extends React.Component {
           </div>
 
           <div className="form-bottom">
-            <form role="form" action="" method="post" className="login-form">
+            <form onSubmit={this.handleLogin} className="login-form">
 
               <div className="form-group">
                 <label className="sr-only">Username</label>
@@ -47,10 +59,10 @@ class Signin extends React.Component {
                 <input type="password" onChange={this.updateFormState} name="password" placeholder="Password" className="form-password form-control" id="form-password" />
               </div>
 
-              <button type="submit" className="btn">Sign in!</button>
-              {this.state.error && (<p>Login Failed</p>)}
+              <button className="btn">Sign in!</button><br/>
+              {this.state.error && (<p>Login Failed, please try again</p>)}
             </form>
-          </div><br/>
+          </div>
           <p>Don't have an account? <Link to='/signup'>Sign up</Link></p>
         </div>
 
