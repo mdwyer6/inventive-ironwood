@@ -4,18 +4,21 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var db = require('./app/config');
 var session = require('express-session');
+var morgan = require('morgan');
 
 var app = express();
 
+app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 
 app.use(session({secret: 'keyboard cat', resave: false, saveUninitialized: true}));
 
 app.use(express.static(path.join(__dirname, './newClient')));
 
 // app.get('/signin', express.static((path.join(__dirname, './client/signin/'))));
-// app.post('/signin', handler.signin);
+app.post('/api/signin', handler.signin);
 // app.get('/signup', express.static((path.join(__dirname, './client/signup/'))));
 // app.post('/signup', handler.signup);
 
