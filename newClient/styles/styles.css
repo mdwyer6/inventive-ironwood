@@ -6,6 +6,10 @@ body {
     overflow-x: hidden;
  }
 
+ svg {
+    margin: 0 30px !important;
+ }
+
 #wrapper {
     padding-left: 0;
     -webkit-transition: all 0.5s ease;

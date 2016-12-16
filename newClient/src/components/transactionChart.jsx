@@ -40,7 +40,7 @@ class TransactionChart extends React.Component {
       <VictoryPie data={this.state.data2}
       x="category"
       y="spent"
-      width={350}
+      height={250}
       padding={0}
       labels={function (datum, nextarg){
         if (Math.round(datum.y/this.state.totalSpent * 100) > 4) {
