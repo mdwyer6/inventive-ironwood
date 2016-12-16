@@ -17,11 +17,11 @@ var Sidebar = (props) => {
         <Link to='/transactions'>Transactions</Link>
       </li>
       <li>
-        <Link to='/debts'>Owes/Debts</Link>
-      </li>
-      <li>
         <Link to='/budget'>Budget</Link>
       </li>
+      <li>
+        <Link to='/loans'>Loans</Link>
+      </li>
       <br />
       <br />
       <br />
@@ -32,10 +32,10 @@ var Sidebar = (props) => {
       <br />
       <br />
       <li>
-        <a href='logout'>Sign Out</a>
+        <Link to='/signin'>Sign In</Link>
       </li>
     </ul>
   );
 }; 
 
-module.exports = Sidebar
+module.exports = Sidebar;

@@ -38,8 +38,8 @@ app.post('/api/budget', handler.createBudget);
 
 
 
-app.get('/users/:userStr', handler.filterUsers);
-app.post('/loans', handler.createLoan);
+app.get('/api/users/:userStr', handler.filterUsers);
+app.post('/api/loans', handler.createLoan);
 app.get('/api/loans/:which', handler.getLoansByType);
 
 app.get('*', function (req, res) {

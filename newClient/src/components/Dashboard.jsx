@@ -10,19 +10,9 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
-    // this.getProposals();
   }
 
-  // getProposals() {
-  //   $.ajax({
-  //     url: '/proposals',
-  //     method: 'GET',
-  //     contentType: 'application/json',
-  //     success: (data) => {
-  //       this.setState({proposals: data});
-  //     }
-  //   });
-  // }
+
 
   render() {
     return (
@@ -33,8 +23,6 @@ class Dashboard extends React.Component {
         </div>
 
         <div>
-          <Link to="/loans">Loans List</Link><br/>
-          <Link to="/home">Create Loan</Link>
           {this.props.children && React.cloneElement.call(this, this.props.children)}
         </div>
 
