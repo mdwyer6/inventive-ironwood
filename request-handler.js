@@ -5,6 +5,8 @@ var Spendings = require('./app/collections/transactions');
 var Spending = require('./app/models/transaction');
 var Debts = require('./app/collections/debts');
 var Debt = require('./app/models/debt');
+var Budgets = require('./app/collections/budgets');
+var Budget = require('./app/models/budget');
 
 exports.currency = function(req, res) {
   request.get({url: 'http://api.fixer.io/latest?base=USD'}, function(error, response, body) {
@@ -100,8 +102,9 @@ exports.getDebts = function(req, res) {
 };
 
 exports.getTransactions = function(req, res) {
+  console.log('are we even getting here');
   var param = {};
-  console.log('id', req.session.user.id);
+  //console.log('id', req.session.user.id);
   new Spending().query({where: {user_id: req.session.user.id}}).fetchAll().then(function(transaction) {
     if (transaction) {
       param.transaction = transaction.models;
@@ -124,6 +127,36 @@ exports.debts = function(req, res) {
       res.send('Done');
     });
 };
+
+exports.createBudget = function(req, res) {
+  var data = {
+    restaurant: req.body.restaurant,
+    groceries: req.body.groceries,
+    transportation: req.body.transportation,
+    shopping: req.body.shopping,
+    utilities: req.body.utilities,
+    nightlife: req.body.nightlife,
+    cash: req.body.cash,
+    other: req.body.other,
+    person: req.body.person,
+    user_id: req.session.user.id,
+  };
+
+  Budgets.create(data)
+    .then(function() {
+      console.log('budget added to db');
+      res.send('done');
+    });
+}
+
+// exports.removeTransaction = function(req, res) {
+//   var person = req.body.person;
+//   var user_id = req.session.user.id;
+//   var title = req.body.title;
+
+
+//   new Spending({person: person, user_id: user_id, title: title}).destroy();
+// }
 
 exports.filterUsers = function(req, res) {
   var userStr = req.params.userStr.toLowerCase();
@@ -157,6 +190,7 @@ exports.createLoan = function(req, res) {
   });
 };
 
+
 exports.getLoansByType = function(req, res) {
   var whichLoans = req.params.which;
   if (whichLoans === 'toCollect') {
@@ -171,6 +205,7 @@ exports.getLoansByType = function(req, res) {
       res.json(user.related(relatedStr).toJSON());
     });
 };
+
 
 
 

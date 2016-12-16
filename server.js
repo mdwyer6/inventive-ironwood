@@ -1,6 +1,6 @@
 var app = require('./server-config.js');
 
-var port = 7000;
+var port = 8000;
 
 app.listen(port);
 

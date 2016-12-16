@@ -79,6 +79,27 @@ db.knex.schema.hasTable('loanPayments').then(function(exists) {
       table.float('paymentAmount');
       table.dateTime('paymentDate');
       table.timestamps();
+      }).then(function (table) {
+      console.log('Created Table', table);
+    });
+  }
+});
+
+
+
+db.knex.schema.hasTable('budgets').then(function(exists) {
+  if (!exists) {
+    db.knex.schema.createTable('budgets', function (entry) {
+      entry.float('restaurant');
+      entry.float('groceries');
+      entry.float('transportation');
+      entry.float('shopping');
+      entry.float('utilities');
+      entry.float('nightlife');
+      entry.float('cash');
+      entry.float('other');
+      entry.string('person');
+      entry.integer('user_id').references('users.id');
     }).then(function (table) {
       console.log('Created Table', table);
     });

@@ -12,7 +12,6 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>Test2</h1>
         {this.props.children}
       </div>
     );

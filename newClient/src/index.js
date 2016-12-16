@@ -9,6 +9,9 @@ import Dashboard from './components/Dashboard.jsx';
 import Signin from './components/Signin.jsx';
 import Signup from './components/Signup.jsx';
 import NotFound from './components/NotFound.jsx';
+import Budget from './components/budgetForm.jsx';
+import Transactions from './components/transactionList.jsx';
+import Debts from './components/createLoanForm.jsx';
 
 
 function requireAuth(nextState, replace) {
@@ -25,11 +28,14 @@ function requireAuth(nextState, replace) {
 ReactDOM.render(
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-      <Route path='/signin' component={Signin} />
-      <Route path='/signup' component={Signup} />
       <Route path='/home' component={Dashboard} onEnter={requireAuth}>
-        <IndexRoute component={CreateLoanForm} />
+        <IndexRoute component={Debts} />
+        <Route path="/transactions" component={Transactions} />
+        <Route path="/debts" component={Debts} />
+        <Route path="/budget" component={Budget} />
       </Route>
+      <Route path="/signin" component={Signin} />
+      <Route path="/signup" component={Signup} />
       <Route path="*" component={NotFound} />
     </Route>
   </Router>, document.getElementById('app'));

@@ -28,11 +28,14 @@ app.post('/api/signin', handler.signin);
 // app.use(handler.check);
 
 app.get('/logout', handler.logout);
-app.get('/currency', handler.currency);
-app.post('/transactions', handler.transactions);
-app.get('/transactions', handler.getTransactions);
-app.post('/debts', handler.debts);
-app.get('/debts', handler.getDebts);
+app.get('/api/currency', handler.currency);
+app.post('/api/transactions', handler.transactions);
+app.get('/api/transactions', handler.getTransactions);
+app.post('/api/debts', handler.debts);
+app.get('/api/debts', handler.getDebts);
+//app.get('api/budget', handler.getBudget);
+app.post('/api/budget', handler.createBudget);
+
 
 
 app.get('/users/:userStr', handler.filterUsers);

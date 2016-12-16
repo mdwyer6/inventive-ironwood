@@ -78,6 +78,19 @@ class App extends React.Component {
     }
   }
 
+  // deleteTransaction(e) {
+  //   e.preventDefault();
+    
+  //   var data = {
+  //     url: 'transactions',
+  //     //don't know how this works
+  //     title: e.target.children[2].children[0].value
+  //   };
+  //   postReq(data);
+  //   this.props.getReq({url: 'transactions'}, this.loadTrans.bind(this));
+
+  // }
+
   submitOwesLoans(e) {
     e.preventDefault();
     var owesLoansData = {
@@ -92,6 +105,24 @@ class App extends React.Component {
     this.props.getReq({url: 'debts'}, this.loadDebts.bind(this));
   }
 
+  submitBudget(e) {
+    console.log('hit');
+    e.preventDefault();
+    var data = {
+      url: 'budget',
+      restaurant: e.target.children[1].children[1].value,
+      groceries:  e.target.children[2].children[1].value,
+      transportation: e.target.children[3].children[1].value,
+      shopping: e.target.children[4].children[1].value,
+      utilities: e.target.children[5].children[1].value,
+      nightlife: e.target.children[6].children[1].value,
+      cash: e.target.children[7].children[1].value,
+      other: e.target.children[8].children[1].value
+    }
+
+    postReq(data);
+  }
+
   render() {
     return (
       <div id="wrapper" className="app">
@@ -101,6 +132,7 @@ class App extends React.Component {
         <div id='page-content-wrapper'>
           <h1 className='appTitle'><strong>Money</strong>.io</h1>
           {this.state.curr}
+          <BudgetForm submitBudget={this.submitBudget} />
         </div>
       </div>
     );

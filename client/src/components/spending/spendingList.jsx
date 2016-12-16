@@ -13,6 +13,7 @@ var SpendingList = (props) => {
           <th>Title</th>
           <th>Amount</th>
           <th>Date</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
