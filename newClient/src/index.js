@@ -15,7 +15,7 @@ function requireAuth(nextState, replace) {
   console.log('loggedIn?', auth.loggedIn());
   if (!auth.loggedIn()) {
     replace({
-      pathname: '/login',
+      pathname: '/signin',
       state: { nextPathname: nextState.location.pathname }
     });
   }
@@ -27,7 +27,7 @@ ReactDOM.render(
     <Route path="/" component={App}>
       <Route path='/signin' component={Signin} />
       <Route path='/signup' component={Signup} />
-      <Route path='/home' component={Dashboard}>
+      <Route path='/home' component={Dashboard} onEnter={requireAuth}>
         <IndexRoute component={CreateLoanForm} />
       </Route>
       <Route path="*" component={NotFound} />

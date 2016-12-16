@@ -2,10 +2,10 @@ import $ from 'jquery';
 
 module.exports = {
   login: function(email, password, reportAuthCB) {
-    if (!!localStorage.authenticated) {
-      reportAuthCB(true);
-      return;
-    }
+    // if (!!localStorage.authenticated) {
+    //   reportAuthCB(true);
+    //   return;
+    // }
     loginAjax(email, password, function(res) {
       if (res.authenticated) {
         localStorage.setItem('authenticated', true);
@@ -27,23 +27,15 @@ module.exports = {
 
 
 
-
-
-
-
-
-
-
-
-
-function loginAjax(email, password, cb) {
+function loginAjax(username, password, cb) {
+  console.log('called');
   $.ajax({
-    url: '/login',
+    url: '/api/signin',
     method: 'POST',
     contentType: 'application/json',
-    data: JSON.stringify({email: email, password: password}),
+    data: JSON.stringify({username: username, password: password}),
     success: function(data) {
-      console.log('login success', data);
+      console.log('login success');
       cb({authenticated: true});
     },
     error: function(data) {
@@ -51,4 +43,4 @@ function loginAjax(email, password, cb) {
       cb({authenticated: false});
     }
   });
-};
+}
