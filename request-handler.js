@@ -7,6 +7,8 @@ var Debts = require('./app/collections/debts');
 var Debt = require('./app/models/debt');
 var Budgets = require('./app/collections/budgets');
 var Budget = require('./app/models/budget');
+var dwolla = require('./dwolla/dwolla.js');
+var Promise = require('bluebird');
 
 exports.currency = function(req, res) {
   request.get({url: 'http://api.fixer.io/latest?base=USD'}, function(error, response, body) {
@@ -203,6 +205,35 @@ exports.getLoansByType = function(req, res) {
     .fetch({withRelated: ['loansToCollect', 'loansToPayback']})
     .then(function(user) {
       res.json(user.related(relatedStr).toJSON());
+    });
+};
+
+exports.transfer = function(req, res) {
+  var senderEmail = req.session.user.email;
+  new User({username: req.body.username}).fetch()
+    .then(function(payee) {
+      var payeeEmail = payee.email;
+      return;
+    })
+    .then(function() {
+      var senderId = dwolla.getUserId(senderEmail);
+      var payeeId = dwolla.getUserId(payeeEmail);
+      return Promise.all([senderId, payeeId]);
+    })
+    .spread(function(senderId, payeeId) {
+      var senderFundId = dwolla.getUserFundingId(senderId);
+      var payeeFundId = dwolla.getUserFundingId(payeeId);
+      return Promise.all([senderFundId, payeeFundId]);
+    })
+    .spread(function(senderFundId, payeeFundId) {
+      return dwolla.transferMoney(senderFundId, payeeFundId, req.body.amount);
+    })
+    .then(function(res) {
+      console.log('Transfer success');
+      res.end();
+    })
+    .catch(function(err) {
+      console.log('Error transferring money:', err);
     });
 };
 

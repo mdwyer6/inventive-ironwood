@@ -25,6 +25,7 @@
     "body-parser": "^1.15.2",
     "bookshelf": "^0.10.2",
     "bootstrap": "^4.0.0-alpha.2",
+    "dwolla-v2": "^1.2.3",
     "express": "^4.14.0",
     "express-partials": "^0.3.0",
     "express-session": "^1.14.2",
