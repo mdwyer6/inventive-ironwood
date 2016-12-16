@@ -42,6 +42,7 @@
     "request": "^2.79.0",
     "sequelize": "^3.27.0",
     "sqlite3": "^3.1.8",
+    "victory": "^0.14.2",
     "webpack": "^1.14.0"
   },
   "devDependencies": {

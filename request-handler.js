@@ -102,6 +102,7 @@ exports.getDebts = function(req, res) {
 };
 
 exports.getTransactions = function(req, res) {
+  console.log('are we even getting here');
   var param = {};
   //console.log('id', req.session.user.id);
   new Spending().query({where: {user_id: req.session.user.id}}).fetchAll().then(function(transaction) {

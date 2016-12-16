@@ -1,8 +1,9 @@
 import React from 'react';
+import { postBudget } from '../lib/ajax.js';
 
 var BudgetForm = (props) => {
   return (
-    <form className="form-inline" onSubmit={props.submitBudget}>
+    <form className="form-inline" onSubmit={postBudget}>
       <h3>Create a Monthly Budget</h3>
       <div className="input-group">
         <div className="input-group-addon">$</div>
