@@ -63,7 +63,7 @@ db.knex.schema.hasTable('loans').then(function(exists) {
       table.string('memo');
       table.float('loanAmount');
       table.float('balanceDue');
-      table.timestamps();
+      table.dateTime('date').defaultTo(knex.fn.now());
     }).then(function (table) {
       console.log('Created Table', table);
     });

@@ -23,7 +23,6 @@ class CreateLoanForm extends React.Component {
     var state = {};
     state[field] = e.target.value;
     this.setState(state);
-    console.log(this.state[field]);
   }
 
   transaction(e) {

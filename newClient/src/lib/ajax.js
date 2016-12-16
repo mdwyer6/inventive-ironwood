@@ -31,6 +31,7 @@ export function createLoan (otherUser, memo, amount, type, cb) {
   });
 }
 
+
 export function getTransactions(cb) {
   $.ajax({
     url: '/api/transactions',
@@ -41,6 +42,20 @@ export function getTransactions(cb) {
     },
     error: (err) => {
       console.log('Error getting transactions');
+    }
+  });
+}
+
+export function getLoansByType (type, cb) {
+  $.ajax({
+    url: '/api/loans/' + type,
+    method: 'GET',
+    contentType: 'application/json',
+    success: (data) => {
+      cb(data);
+    },
+    error: (err) => {
+      console.log('AJAX error filtering users', err);
     }
   });
 }
