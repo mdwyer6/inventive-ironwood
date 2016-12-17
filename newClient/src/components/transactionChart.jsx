@@ -6,6 +6,7 @@ import ContainerDimensions from 'react-container-dimensions';
 
 //datum.category + '\n' +
 //labelComponent={<VictoryLegend  />}
+//datum.category + '\n' + 
 
 class TransactionChart extends React.Component {
   constructor(props) {
