@@ -118,3 +118,25 @@ export function transferFunds (username, memo, amount, cb) {
     error: (err) => console.log('AJAX error creating transfer', err)
   });
 }
+
+export function signup (firstname, lastname, email, address1, address2, city, state, zip, dob, ssn) {
+  $.ajax({
+    url: '/api/transfer',
+    method: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify({
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      address1: address1,
+      address2: address2,
+      city: city,
+      state: state,
+      zip: zip,
+      dob: dob,
+      ssn: ssn
+    }),
+    success: (data) => cb(data),
+    error: (err) => console.log('AJAX error creating user', err)
+  });
+}
