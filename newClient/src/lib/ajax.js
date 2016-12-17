@@ -102,19 +102,3 @@ export function postBudget(e) {
     }
   });
 }
-
-export function transferFunds (username, memo, amount, cb) {
-  console.log(amount);
-  $.ajax({
-    url: '/api/transfer',
-    method: 'POST',
-    contentType: 'application/json',
-    data: JSON.stringify({
-      username: username,
-      memo: memo,
-      loanAmount: amount
-    }),
-    success: (data) => cb(data),
-    error: (err) => console.log('AJAX error creating loan', err)
-  });
-}

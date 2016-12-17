@@ -22,9 +22,6 @@ var Sidebar = (props) => {
       <li>
         <Link to='/loans'>Loans</Link>
       </li>
-      <li>
-        <Link to='/transfer'>Transfer Funds</Link>
-      </li>
       <br />
       <br />
       <br />
@@ -39,6 +36,6 @@ var Sidebar = (props) => {
       </li>
     </ul>
   );
-};
+}; 
 
 module.exports = Sidebar;

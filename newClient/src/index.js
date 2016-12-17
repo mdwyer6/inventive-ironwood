@@ -13,7 +13,6 @@ import NotFound from './components/NotFound.jsx';
 import Budget from './components/budgetForm.jsx';
 import Transactions from './components/transactionList.jsx';
 import Loans from './components/loans.jsx';
-import TransferFunds from './components/transferFunds.jsx';
 
 
 function requireAuth(nextState, replace) {
@@ -35,7 +34,6 @@ ReactDOM.render(
         <Route path="/transactions" component={Transactions} />
         <Route path="/budget" component={Budget} />
         <Route path='/loans' component={Loans} />
-        <Route path='/transfer' component={TransferFunds} />
       </Route>
       <IndexRoute component={Signin} />
       <Route path='/signin' component={Signin} />
