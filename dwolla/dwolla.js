@@ -6,7 +6,7 @@ var client = new dwolla.Client({
   environment: 'sandbox'
 });
 
-var accountToken = new client.Token({'access_token': 'JMzAZS0bLZ4CasHfnDcEyFJd30Nlp9IGn8LxtB9nFYVk1W7Ja8'});
+var accountToken = new client.Token({'access_token': 'DdIg00Z3sAIJL1tsQ1blrugcufSwo6mlao3CsviWdIxVuOaLR8'});
 
 var createVerifiedCustomer = (firstName, lastName, email, ipAddress, address1, address2, city, state, zip, dob, ssn) => {
   if (address2) {
@@ -114,6 +114,7 @@ module.exports = {
   createIavToken: createIavToken,
   getUserId: getUserId,
   createVerifiedCustomer: createVerifiedCustomer,
+  getUserFundingId: getUserFundingId
 };
   // <script type="text/javascript">
   // $('#start').click(function() {

@@ -21,7 +21,6 @@ exports.currency = function(req, res) {
 };
 
 exports.signin = function(req, res, next) {
-  console.log('Req is: ', req.body);
   var username = req.body.username;
   var password = req.body.password;
   new User({username: username }).fetch().then(function(user) {
@@ -32,6 +31,7 @@ exports.signin = function(req, res, next) {
       if (user.attributes.password === password) {
         req.session.regenerate(function() {
           req.session.user = user;
+          console.log(req.session.user);
           // res.location('/');
           res.json({authenticated: true});
         });
@@ -64,7 +64,6 @@ exports.signup = function(req, res) {
 };
 
 exports.check = function(req, res, next) {
-  console.log('Session user is: ', req.session.user);
   if (!req.session.user) {
     res.redirect('/signin');
   } else {
@@ -209,32 +208,35 @@ exports.getLoansByType = function(req, res) {
 };
 
 exports.transfer = function(req, res) {
-  var senderEmail = req.session.user.email;
-  new User({username: req.body.username}).fetch()
-    .then(function(payee) {
-      var payeeEmail = payee.email;
-      return;
-    })
-    .then(function() {
-      var senderId = dwolla.getUserId(senderEmail);
-      var payeeId = dwolla.getUserId(payeeEmail);
-      return Promise.all([senderId, payeeId]);
-    })
-    .spread(function(senderId, payeeId) {
-      var senderFundId = dwolla.getUserFundingId(senderId);
-      var payeeFundId = dwolla.getUserFundingId(payeeId);
-      return Promise.all([senderFundId, payeeFundId]);
-    })
-    .spread(function(senderFundId, payeeFundId) {
-      return dwolla.transferMoney(senderFundId, payeeFundId, req.body.amount);
-    })
-    .then(function(res) {
-      console.log('Transfer success');
-      res.end();
-    })
-    .catch(function(err) {
-      console.log('Error transferring money:', err);
-    });
+  var sender = new User({username: req.session.user.username}).fetch();
+  var payee = new User({username: req.body.username}).fetch();
+  Promise.all([sender, payee])
+  .spread(function(sender, payee) {
+    var senderEmail = sender.attributes.email;
+    var payeeEmail = payee.attributes.email;
+    return [senderEmail, payeeEmail];
+  })
+  .spread(function(senderEmail, payeeEmail) {
+    var senderId = dwolla.getUserId(senderEmail);
+    var payeeId = dwolla.getUserId(payeeEmail);
+    return Promise.all([senderId, payeeId]);
+  })
+  .spread(function(senderId, payeeId) {
+    var senderFundId = dwolla.getUserFundingId(senderId);
+    var payeeFundId = dwolla.getUserFundingId(payeeId);
+    return Promise.all([senderFundId, payeeFundId]);
+  })
+  .spread(function(senderFundId, payeeFundId) {
+    return dwolla.transferMoney(senderFundId, payeeFundId, req.body.amount);
+  })
+  .then(function(response) {
+    console.log('Transfer success');
+    res.json(response);
+  })
+  .catch(function(err) {
+    console.log('Error transferring money:', err);
+    res.sendStatus(500);
+  });
 };
 
 

@@ -42,6 +42,8 @@ app.get('/api/users/:userStr', handler.filterUsers);
 app.post('/api/loans', handler.createLoan);
 app.get('/api/loans/:which', handler.getLoansByType);
 
+app.post('/api/transfer', handler.transfer);
+
 app.get('*', function (req, res) {
   res.sendFile(path.resolve(__dirname + '/newClient/index.html'));
 });
