@@ -15,7 +15,6 @@ export function filterUsers (userStr, cb) {
 }
 
 export function createLoan (otherUser, memo, amount, type, cb) {
-  console.log(amount);
   $.ajax({
     url: '/api/loans',
     method: 'POST',
@@ -117,6 +116,29 @@ export function postBudget(e) {
     error: (err) => {
       console.log('Error getting transactions');
     }
+  });
+}
+
+
+export function changeLoanStatus(id, status, cb) {
+  $.ajax({
+    url: '/api/loans',
+    method: 'PUT',
+    contentType: 'application/json',
+    data: JSON.stringify({confirmLoan: {id: id, status: status}}),
+    success: (data) => cb(data),
+    error: (err) => console.log('AJAX error creating loan', err)
+  });
+}
+
+export function deleteLoan(id, status, cb) {
+  $.ajax({
+    url: '/api/loans',
+    method: 'DELETE',
+    contentType: 'application/json',
+    data: JSON.stringify({id: id, status: status}),
+    success: (data) => cb(data),
+    error: (err) => console.log('AJAX error deleting loan', err)
   });
 }
 
