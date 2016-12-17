@@ -35,12 +35,14 @@ app.post('/api/debts', handler.debts);
 app.get('/api/debts', handler.getDebts);
 app.get('/api/budget', handler.getBudget);
 app.post('/api/budget', handler.createBudget);
-
+app.post('/api/transfer', handler.transfer);
 
 
 app.get('/api/users/:userStr', handler.filterUsers);
 app.post('/api/loans', handler.createLoan);
 app.get('/api/loans/:which', handler.getLoansByType);
+
+app.post('/api/transfer', handler.transfer);
 
 app.get('*', function (req, res) {
   res.sendFile(path.resolve(__dirname + '/newClient/index.html'));

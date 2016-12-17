@@ -7,6 +7,8 @@ var Debts = require('./app/collections/debts');
 var Debt = require('./app/models/debt');
 var Budgets = require('./app/collections/budgets');
 var Budget = require('./app/models/budget');
+var dwolla = require('./dwolla/dwolla.js');
+var Promise = require('bluebird');
 
 exports.currency = function(req, res) {
   request.get({url: 'http://api.fixer.io/latest?base=USD'}, function(error, response, body) {
@@ -29,6 +31,7 @@ exports.signin = function(req, res, next) {
       if (user.attributes.password === password) {
         req.session.regenerate(function() {
           req.session.user = user;
+          console.log(req.session.user);
           // res.location('/');
           res.json({authenticated: true});
         });
@@ -61,7 +64,6 @@ exports.signup = function(req, res) {
 };
 
 exports.check = function(req, res, next) {
-  console.log('Session user is: ', req.session.user);
   if (!req.session.user) {
     res.redirect('/signin');
   } else {
@@ -209,6 +211,38 @@ exports.getLoansByType = function(req, res) {
     .then(function(user) {
       res.json(user.related(relatedStr).toJSON());
     });
+};
+
+exports.transfer = function(req, res) {
+  var sender = new User({username: req.session.user.username}).fetch();
+  var payee = new User({username: req.body.username}).fetch();
+  Promise.all([sender, payee])
+  .spread(function(sender, payee) {
+    var senderEmail = sender.attributes.email;
+    var payeeEmail = payee.attributes.email;
+    return [senderEmail, payeeEmail];
+  })
+  .spread(function(senderEmail, payeeEmail) {
+    var senderId = dwolla.getUserId(senderEmail);
+    var payeeId = dwolla.getUserId(payeeEmail);
+    return Promise.all([senderId, payeeId]);
+  })
+  .spread(function(senderId, payeeId) {
+    var senderFundId = dwolla.getUserFundingId(senderId);
+    var payeeFundId = dwolla.getUserFundingId(payeeId);
+    return Promise.all([senderFundId, payeeFundId]);
+  })
+  .spread(function(senderFundId, payeeFundId) {
+    return dwolla.transferMoney(senderFundId, payeeFundId, req.body.amount);
+  })
+  .then(function(response) {
+    console.log('Transfer success');
+    res.json(response);
+  })
+  .catch(function(err) {
+    console.log('Error transferring money:', err);
+    res.sendStatus(500);
+  });
 };
 
 
