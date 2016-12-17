@@ -11,7 +11,6 @@ class BudgetChart extends React.Component {
   constructor(props) {
   	super(props);
     this.generateValues = this.generateValues.bind(this);
-    this.calculatePercent = this.calculatePercent.bind(this);
     this.buildArray = this.buildArray.bind(this);
     this.computeTotals = this.computeTotals.bind(this);
   	this.state = {
@@ -42,17 +41,6 @@ class BudgetChart extends React.Component {
       }
     }
     return arr;
-  }
-
-  calculatePercent(budgetObj, transactionObj) {
-    var sum = 0;
-    var result= {};
-    for (var prop in obj) {
-      sum += obj.prop;
-    }
-    for (var i = 0; i < Object.keys(obj).length; i++) {
-      //result[obj.prop] =
-    }
   }
 
   computeTotals(data) {

@@ -13,11 +13,12 @@ class TransactionList extends React.Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     getTransactions((data) => {
       this.setState({
         transactions: data.transaction
       })
+      console.log('this.state.transactions is: ', this.state.transactions)
     });
   }
 
@@ -44,7 +45,7 @@ class TransactionList extends React.Component {
       return (
       <div className="spending">
         <h2>Transactions</h2>
-        <TransactionChart />
+        <TransactionChart data={this.state.transactions} />
         <table className="table">
           <thead id="spending-head">
             <tr>
