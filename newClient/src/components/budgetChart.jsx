@@ -93,8 +93,6 @@ class BudgetChart extends React.Component {
   }
 
   componentWillMount() {
-    counter++
-    console.log('counter is: ', counter);
     getBudget((data) => {
       console.log('budget', data);
       var budget = data;

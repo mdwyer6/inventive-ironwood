@@ -28,14 +28,12 @@ module.exports = {
 
 
 function loginAjax(username, password, cb) {
-  console.log('called');
   $.ajax({
     url: '/api/signin',
     method: 'POST',
     contentType: 'application/json',
     data: JSON.stringify({username: username, password: password}),
     success: function(data) {
-      console.log('login success');
       cb({authenticated: true});
     },
     error: function(data) {
