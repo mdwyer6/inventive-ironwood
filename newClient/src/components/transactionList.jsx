@@ -13,7 +13,7 @@ class TransactionList extends React.Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     getTransactions((data) => {
       this.setState({
         transactions: data.transaction
@@ -65,7 +65,7 @@ class TransactionList extends React.Component {
     }
 
     return (
-      <div>Loading... </div>
+      <div></div>
     )
   }
 }

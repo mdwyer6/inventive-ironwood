@@ -3,10 +3,6 @@ import ReactDOM from 'react-dom';
 import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryPie, VictoryContainer, VictoryPortal, VictoryLabel} from 'victory';
 import VictoryLegend from './VictoryLegend.jsx';
 
-//datum.category + '\n' +
-//labelComponent={<VictoryLegend  />}
-//datum.category + '\n' + 
-
 class TransactionChart extends React.Component {
   constructor(props) {
     super(props);

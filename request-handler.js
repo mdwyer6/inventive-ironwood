@@ -70,12 +70,20 @@ exports.check = function(req, res, next) {
     next();
   }
 };
+
 exports.logout = function(req, res) {
   req.session.destroy(function() {
     res.redirect('/signin');
     console.log('logout');
   });
 };
+
+exports.getUser = function(req, res) {
+  new User({id: req.session.user.id}).fetch().then(function(user) {
+    console.log('user object from db:', user.attributes.username);
+    res.json(user.attributes.username);
+  });
+}
 
 exports.transactions = function(req, res) {
   var category = req.body.category;
@@ -130,7 +138,6 @@ exports.debts = function(req, res) {
 };
 
 exports.getBudget = function(req, res) {
-  console.log
   new Budget({user_id: req.session.user.id}).fetch().then(function(budget) {
     res.json(budget);
   });
