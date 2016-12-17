@@ -6,7 +6,7 @@ var client = new dwolla.Client({
   environment: 'sandbox'
 });
 
-var accountToken = new client.Token({'access_token': 'mIlGHC6dMs4tpQITzKSKM1tn7DT0N7iHTy2rG3w8czWWmmTo2p'});
+var accountToken = new client.Token({'access_token': 'CY1kEEJYDcu3cO5xbDaaR2TcwCdF9tOEneLlrBwDnJUWNMTtKQ'});
 
 var createVerifiedCustomer = (firstName, lastName, email, ipAddress, address1, address2, city, state, zip, dob, ssn) => {
   if (address2) {
@@ -39,11 +39,11 @@ var createVerifiedCustomer = (firstName, lastName, email, ipAddress, address1, a
       ssn: ssn
     };
   }
-  accountToken
+  return accountToken
   .post('customers', requestBody)
   .then(function(res) {
-    console.log('Worked');
-    res.headers.get('location');
+    console.log('Created Verified Customer');
+    // res.headers.get('location'); -> Endpoint for customer info
   });
 
 };

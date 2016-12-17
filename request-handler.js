@@ -44,22 +44,29 @@ exports.signin = function(req, res, next) {
 };
 
 exports.signup = function(req, res) {
-  var username = req.body.username;
-  var password = req.body.password;
-  new User({username: username}).fetch().then(function(found) {
-    if (found) {
-      res.send('sorry, username taken');
-    } else {
-      Users.create({
-        username: username,
-        password: password
-      }).then(function(newUser) {
-        req.session.regenerate(function() {
-          req.session.user = newUser;
-          res.redirect('/');
+  dwolla.createVerifiedCustomer(req.body.firstName, req.body.lastName, req.body.email, req.ip, req.body.address1, req.body.address2, req.body.city, req.body.state, req.body.zip, req.body.dob, req.body.ssn)
+  .then(function() {
+    new User({username: req.body.username}).fetch().then(function(found) {
+      if (found) {
+        res.status(409).send('username already exists');
+      } else {
+        Users.create({
+          username: req.body.username,
+          password: req.body.password,
+          email: req.body.email,
+          firstName: req.body.firstName,
+          lastName: req.body.lastName
+        }).then(function(newUser) {
+          req.session.regenerate(function() {
+            req.session.user = newUser;
+            res.end();
+          });
         });
-      });
-    }
+      }
+    });
+  })
+  .catch(function(err) {
+    res.status(500).send(err);
   });
 };
 
@@ -284,6 +291,17 @@ exports.deleteLoan = function(req, res) {
       res.sendStatus(403);
     }
   });  
+};
+
+exports.getIavToken = function(req, res) {
+  dwolla.getUserId(req.session.user.email)
+  .then(createIavToken)
+  .then(function(iavToken) {
+    res.json(iavToken);
+  })
+  .catch(function(err) {
+    res.status(500).send(err);
+  });
 };
 
 
