@@ -33,9 +33,9 @@ app.post('/api/transactions', handler.transactions);
 app.get('/api/transactions', handler.getTransactions);
 app.post('/api/debts', handler.debts);
 app.get('/api/debts', handler.getDebts);
-//app.get('api/budget', handler.getBudget);
+app.get('/api/budget', handler.getBudget);
 app.post('/api/budget', handler.createBudget);
-
+app.post('/api/transfer', handler.transfer);
 
 
 app.get('/api/users/:userStr', handler.filterUsers);

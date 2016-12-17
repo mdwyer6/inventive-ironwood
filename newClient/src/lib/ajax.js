@@ -32,6 +32,7 @@ export function createLoan (otherUser, memo, amount, type, cb) {
 
 
 export function getTransactions(cb) {
+  console.log('heyyyyy');
   $.ajax({
     url: '/api/transactions',
     method: 'GET',
@@ -78,6 +79,22 @@ export function postTransactions(e) {
   });
 }
 
+export function getBudget(cb) {
+  //e.preventDefault();
+  $.ajax({
+    url: '/api/budget',
+    method: 'GET',
+    contentType: 'application/json',
+    success: (data) => {
+      console.log('data is', data);
+      cb(data);
+    },
+    error: (err) => {
+      console.log('Error getting transactions');
+    }
+  });
+}
+
 export function postBudget(e) {
   $.ajax({
     url: '/api/budget',
@@ -102,6 +119,7 @@ export function postBudget(e) {
   });
 }
 
+
 export function changeLoanStatus(id, status, cb) {
   $.ajax({
     url: '/api/loans',
@@ -121,5 +139,21 @@ export function deleteLoan(id, status, cb) {
     data: JSON.stringify({id: id, status: status}),
     success: (data) => cb(data),
     error: (err) => console.log('AJAX error deleting loan', err)
+  });
+}
+
+export function transferFunds (username, memo, amount, cb) {
+  console.log(amount);
+  $.ajax({
+    url: '/api/transfer',
+    method: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify({
+      username: username,
+      memo: memo,
+      amount: amount
+    }),
+    success: (data) => cb(data),
+    error: (err) => console.log('AJAX error creating transfer', err)
   });
 }

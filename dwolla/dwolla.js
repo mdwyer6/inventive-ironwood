@@ -6,7 +6,7 @@ var client = new dwolla.Client({
   environment: 'sandbox'
 });
 
-var accountToken = new client.Token({'access_token': 'DdIg00Z3sAIJL1tsQ1blrugcufSwo6mlao3CsviWdIxVuOaLR8'});
+var accountToken = new client.Token({'access_token': 'mIlGHC6dMs4tpQITzKSKM1tn7DT0N7iHTy2rG3w8czWWmmTo2p'});
 
 var createVerifiedCustomer = (firstName, lastName, email, ipAddress, address1, address2, city, state, zip, dob, ssn) => {
   if (address2) {
@@ -81,7 +81,7 @@ var getUserFundingId = (userId) => {
   .then((res) => res.body._embedded['funding-sources'][0].id);
 };
 
-// getUserFundingId('5e92f31d-a9df-47e9-b1cd-00649e2634fc').then(link => console.log(link));
+// getUserFundingId('b9fc0d7c-de2c-4e90-9538-b7bd3642eebe').then(link => console.log(link));
 
 
 var transferMoney = (sourceFundId, destFundId, amount) => {
@@ -101,13 +101,14 @@ var transferMoney = (sourceFundId, destFundId, amount) => {
   };
   return accountToken
   .post('transfers', requestBody)
-  .then((res) => { 
-    res.headers.get('location'); 
+  .then((res) => {
+    res.headers.get('location');
     return res;
   });
 };
 
 
+// transferMoney('9ad47e31-e81d-47f6-9c41-a63488df667e', '0e0b9ff5-fb05-454e-a6c2-48f15a392ab5', '500');
 
 module.exports = {
   transferMoney: transferMoney,
