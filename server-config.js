@@ -41,6 +41,8 @@ app.post('/api/budget', handler.createBudget);
 app.get('/api/users/:userStr', handler.filterUsers);
 app.post('/api/loans', handler.createLoan);
 app.get('/api/loans/:which', handler.getLoansByType);
+app.put('/api/loans', handler.updateLoan);
+app.delete('/api/loans', handler.deleteLoan);
 
 app.post('/api/transfer', handler.transfer);
 

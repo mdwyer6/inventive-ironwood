@@ -1,26 +1,31 @@
 import React from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import { getLoansByType } from '../lib/ajax.js';
+import { getLoansByType, changeLoanStatus, deleteLoan } from '../lib/ajax.js';
 import { ButtonToolbar, ButtonGroup, Button } from 'react-bootstrap';
 
 class ConfirmDelete extends React.Component {
   constructor(props) {
     super(props);
-    this.clickHandler = this.clickHandler.bind(this);
+    this.updateLoanHandler = this.updateLoanHandler.bind(this);
+    this.deleteLoanHandler = this.deleteLoanHandler.bind(this);
   }
 
-  clickHandler(e) {
+  updateLoanHandler(e) {
     e.preventDefault();
-    //Have access to loan id here... need ajax to confirm loan
-    console.log(this.props.loan.id);
+    changeLoanStatus(this.props.loan._pivot_id, this.props.loan._pivot_status, (data) => console.log('changeLoanSuccess'));
+  }
+
+  deleteLoanHandler(e) {
+    e.preventDefault();
+    deleteLoan(this.props.loan._pivot_id, this.props.loan._pivot_status, (data) => console.log('Delete loan success'));
   }
 
   render() {
     return (
       <div>
         <ButtonToolbar>
-          <Button onClick={this.clickHandler} bsStyle="primary" bsSize="xsmall">Confirm</Button>
-          <Button onClick={this.clickHandler} bsSize="xsmall">Delete Request</Button>
+          <Button onClick={this.updateLoanHandler} bsStyle="primary" bsSize="xsmall">Confirm</Button>
+          <Button onClick={this.deleteLoanHandler} bsSize="xsmall">Delete Request</Button>
         </ButtonToolbar>
       </div>
     );
@@ -63,6 +68,10 @@ class LoanList extends React.Component {
     } else if (this.state.type === 'toCollect' && cell === 'lenderConfirm' || this.state.type === 'toPayback' && cell === 'borrowerConfirm') {
       return (
         <ConfirmDelete loan={row} />
+      );
+    } else if (cell === 'active') {
+      return (
+        <span>Active</span>
       );
     }
   }
