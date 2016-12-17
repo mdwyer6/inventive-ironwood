@@ -17,7 +17,6 @@ import TransferFunds from './components/transferFunds.jsx';
 
 
 function requireAuth(nextState, replace) {
-  console.log('loggedIn?', auth.loggedIn());
   if (!auth.loggedIn()) {
     replace({
       pathname: '/signin',

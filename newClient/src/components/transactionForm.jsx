@@ -6,7 +6,7 @@ var TransactionForm = (props) => {
     <h3>Add Transaction</h3>
     <div className='form-group'>
       <select className="custom-select">
-        <option selected value="Restaurant">Restaurant</option>
+        <option value="Restaurant">Restaurant</option>
         <option value="Groceries">Groceries</option>
         <option value="Transportation">Transportation</option>
         <option value="Shopping">Shopping</option>

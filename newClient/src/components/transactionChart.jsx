@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryPie, VictoryContainer, VictoryPortal, VictoryLabel} from 'victory';
 import VictoryLegend from './VictoryLegend.jsx';
-import ContainerDimensions from 'react-container-dimensions';
 
 //datum.category + '\n' +
 //labelComponent={<VictoryLegend  />}

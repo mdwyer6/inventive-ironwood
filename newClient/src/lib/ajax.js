@@ -33,6 +33,7 @@ export function createLoan (otherUser, memo, amount, type, cb) {
 
 
 export function getTransactions(cb) {
+  console.log('heyyyyy');
   $.ajax({
     url: '/api/transactions',
     method: 'GET',
@@ -72,6 +73,22 @@ export function postTransactions(e) {
     }),
     success: (data) => {
       console.log('transaction was logged!');
+    },
+    error: (err) => {
+      console.log('Error getting transactions');
+    }
+  });
+}
+
+export function getBudget(cb) {
+  //e.preventDefault();
+  $.ajax({
+    url: '/api/budget',
+    method: 'GET',
+    contentType: 'application/json',
+    success: (data) => {
+      console.log('data is', data);
+      cb(data);
     },
     error: (err) => {
       console.log('Error getting transactions');

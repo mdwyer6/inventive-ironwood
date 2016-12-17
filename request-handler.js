@@ -129,6 +129,13 @@ exports.debts = function(req, res) {
     });
 };
 
+exports.getBudget = function(req, res) {
+  console.log
+  new Budget({user_id: req.session.user.id}).fetch().then(function(budget) {
+    res.json(budget);
+  });
+}
+
 exports.createBudget = function(req, res) {
   var data = {
     restaurant: req.body.restaurant,
@@ -190,7 +197,6 @@ exports.createLoan = function(req, res) {
     });
   });
 };
-
 
 exports.getLoansByType = function(req, res) {
   var whichLoans = req.params.which;
