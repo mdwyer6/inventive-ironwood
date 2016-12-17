@@ -376,6 +376,75 @@ img { max-width: 100%; }
     margin-top: 25px;
 }
 
+.pieLegend {
+     background: #fff;
+     border: 1px solid #000;
+     padding: 5px 15px;
+}
+
+.pieLabel {
+    height: 16px;
+    width: 16px;
+    margin-right: 5px;
+}
+
+.pieCategory {
+    position: relative;
+    bottom: 4px; 
+}
+
+.pieLabel, .pieCategory {
+    display: inline-block;
+}
+
+#pieLabel1 {
+    background: #67b7dc;
+}
+
+#pieLabel2 {
+    background: #fdd400;
+}
+
+#pieLabel3 {
+    background: #84b761
+}
+
+#pieLabel4 {
+    background: #cc4748;
+}
+
+#pieLabel5 {
+    background: #cd82ad;
+}
+
+#pieLabel6 {
+    background: #b7b83f;
+}
+
+#pieLabel7 {
+    background: #ff9900;
+}
+
+#pieLabel8 {
+    background: #990099;
+}
+
+.containPie {
+    width: 700px;
+    display: inline-block;
+}
+
+.containLegend {
+    display: inline-block;
+    text-align: left;
+    position: relative;
+    bottom: 107px;
+    right: 150px;
+}
+
+.containPieAndLegend {
+    text-align: center;
+}
 
 /***** Media queries *****/
 
