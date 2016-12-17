@@ -27,13 +27,19 @@ class Signup extends React.Component {
 
   handleSignup(e) {
     e.preventDefault();
-    auth.login(this.state.username, this.state.password, (loggedIn) => {
-      if (!loggedIn) {
-        return this.setState({error: true});
-      }
-      browserHistory.push('/signin');
-    });
-    signup(this.state.firstname, this.state.lastname, this.state.email, this.state.address1, this.state.address2, this.state.city, this.state.state, this.state.zip, this.state.dob, this.state.ssn);
+    signup(this.state.username, 
+      this.state.password, this.state.firstName, 
+      this.state.lastName, 
+      this.state.email, 
+      this.state.address1, 
+      this.state.address2, 
+      this.state.city, 
+      this.state.state, 
+      this.state.zip, 
+      this.state.dob, 
+      this.state.ssn,
+      (data) => console.log('Signin Success')
+    );
   }
 
 
@@ -115,7 +121,7 @@ class Signup extends React.Component {
                 <label className="sr-only">SSN</label>
                 <input type="password" onChange={this.updateFormState} name="ssn" placeholder="SSN" className=" form-control" maxLength="4"/>
               </div>
-              <button className="btn">Sign in!</button><br/>
+              <button className="btn">Sign up!</button><br/>
               {this.state.error && (<p>Signup Failed, please try again</p>)}
             </form>
           </div>

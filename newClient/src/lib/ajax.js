@@ -158,14 +158,16 @@ export function transferFunds (username, memo, amount, cb) {
   });
 }
 
-export function signup (firstname, lastname, email, address1, address2, city, state, zip, dob, ssn) {
+export function signup (username, password, firstname, lastname, email, address1, address2, city, state, zip, dob, ssn, cb) {
   $.ajax({
-    url: '/api/transfer',
+    url: '/api/signup',
     method: 'POST',
     contentType: 'application/json',
     data: JSON.stringify({
-      firstname: firstname,
-      lastname: lastname,
+      username: username,
+      password: password,
+      firstName: firstname,
+      lastName: lastname,
       email: email,
       address1: address1,
       address2: address2,

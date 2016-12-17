@@ -8,6 +8,9 @@ var morgan = require('morgan');
 
 var app = express();
 
+// Get IP of client in req.ip
+app.enable('trust proxy');
+
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -17,10 +20,9 @@ app.use(session({secret: 'keyboard cat', resave: false, saveUninitialized: true}
 
 app.use(express.static(path.join(__dirname, './newClient')));
 
-// app.get('/signin', express.static((path.join(__dirname, './client/signin/'))));
+
 app.post('/api/signin', handler.signin);
-// app.get('/signup', express.static((path.join(__dirname, './client/signup/'))));
-// app.post('/signup', handler.signup);
+app.post('/api/signup', handler.signup);
 
 //-----------------------------------------------------
 //                SECURE ROUTES
@@ -35,7 +37,6 @@ app.post('/api/debts', handler.debts);
 app.get('/api/debts', handler.getDebts);
 app.get('/api/budget', handler.getBudget);
 app.post('/api/budget', handler.createBudget);
-app.post('/api/transfer', handler.transfer);
 
 
 app.get('/api/users/:userStr', handler.filterUsers);
@@ -45,6 +46,8 @@ app.put('/api/loans', handler.updateLoan);
 app.delete('/api/loans', handler.deleteLoan);
 
 app.post('/api/transfer', handler.transfer);
+
+app.get('/api/iavtoken', handler.getIavToken);
 
 app.get('*', function (req, res) {
   res.sendFile(path.resolve(__dirname + '/newClient/index.html'));
