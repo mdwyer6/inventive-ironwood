@@ -43,13 +43,16 @@ class LoanList extends React.Component {
   }
 
   componentDidMount() {
-    getLoansByType('toCollect', (loans) => this.setState({loans: loans}));
+    getLoansByType(this.state.type, (loans) => this.setState({loans: loans}));
   }
 
   getLoans(e) {
     e.preventDefault();
     var type = e.target.name;
-    getLoansByType(e.target.name, (loans) => this.setState({loans: loans, type: type}));
+    this.setState({type: e.target.name});
+    getLoansByType(e.target.name, (loans) => {
+      this.setState({loans: loans});
+    });
   }
 
   statusFormatter(cell, row) {
