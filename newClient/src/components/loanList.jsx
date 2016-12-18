@@ -1,7 +1,7 @@
 import React from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { getLoansByType, changeLoanStatus, deleteLoan } from '../lib/ajax.js';
-import { ButtonToolbar, ButtonGroup, Button } from 'react-bootstrap';
+import { ButtonToolbar, ButtonGroup, Button, Nav, NavItem, Tab, Row, Col } from 'react-bootstrap';
 
 class ConfirmDelete extends React.Component {
   constructor(props) {
@@ -67,21 +67,30 @@ class LoanList extends React.Component {
   render() {
     return (
       <div>
-        <ButtonToolbar>
-          <ButtonGroup>
-            <Button onClick={this.getLoans} name="toCollect" bsStyle="success">To Collect</Button>
-            <Button onClick={this.getLoans} name="toPayback" bsStyle="danger">To Pay</Button>
-          </ButtonGroup>
-        </ButtonToolbar>
+        <Tab.Container id="tabs-with-dropdown" defaultActiveKey={1}>
+          <Row className="clearfix">
 
-        <BootstrapTable data={this.props.loans} striped hover condensed>
-          <TableHeaderColumn dataField='_pivot_date' isKey dataSort>Date</TableHeaderColumn>
-          <TableHeaderColumn dataField='username' dataSort>Who</TableHeaderColumn>
-          <TableHeaderColumn dataField='_pivot_memo' dataSort>Memo</TableHeaderColumn>
-          <TableHeaderColumn dataField='_pivot_loanAmount' dataFormat={currencyFormatter} dataSort>Total</TableHeaderColumn>
-          <TableHeaderColumn dataField='_pivot_status' dataFormat={ this.statusFormatter } dataSort>Status</TableHeaderColumn>
-          {/* <TableHeaderColumn dataField='username' isKey>Balance Due</TableHeaderColumn> */}
-        </BootstrapTable>
+            <Col sm={12}>
+              <Nav bsStyle="tabs">
+                <NavItem name="toCollect" onClick={this.getLoans} eventKey={1}>Loans to Collect</NavItem>
+                <NavItem name="toPayback" onClick={this.getLoans} eventKey={2}>Loans to Payback</NavItem>
+              </Nav>
+            </Col>
+
+            <Col sm={12}>
+              <BootstrapTable data={this.props.loans} striped hover condensed>
+                <TableHeaderColumn dataField='_pivot_date' isKey dataSort>Date</TableHeaderColumn>
+                <TableHeaderColumn dataField='username' dataSort>Who</TableHeaderColumn>
+                <TableHeaderColumn dataField='_pivot_memo' dataSort>Memo</TableHeaderColumn>
+                <TableHeaderColumn dataField='_pivot_loanAmount' dataFormat={currencyFormatter} dataSort>Total</TableHeaderColumn>
+                <TableHeaderColumn dataField='_pivot_status' dataFormat={ this.statusFormatter } dataSort>Status</TableHeaderColumn>
+                {/* <TableHeaderColumn dataField='username' isKey>Balance Due</TableHeaderColumn> */}
+              </BootstrapTable>
+            </Col>
+
+          </Row>
+        </Tab.Container>
+
       </div>
     );
   }
