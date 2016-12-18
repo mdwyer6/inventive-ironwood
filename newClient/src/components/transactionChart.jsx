@@ -71,8 +71,8 @@ class TransactionChart extends React.Component {
   }
 
   render() {
+    if (this.props.isData) {  
     return (
-      <div>
         <div className='containPieAndLegend'>
           <div className='containPie'>
             <VictoryPie data={this.props.data}
@@ -102,9 +102,11 @@ class TransactionChart extends React.Component {
           <VictoryLegend data={this.props.data} colors={this.state.colorScale}/>
         </div>
       </div>
-    </div>
-      );
-    }   
+      )
+    } else {
+      return <div></div>
+    }
+  }   
 }
 
 module.exports = TransactionChart;
