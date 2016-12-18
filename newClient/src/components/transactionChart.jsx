@@ -41,7 +41,7 @@ class TransactionChart extends React.Component {
   calculateSpending(dataObj) {
     var total = 0
     for (var prop in dataObj) {
-      total += Number(dataObj[prop].amount.slice(1));
+      total += dataObj[prop].amount;
     }
     return total;
   }
@@ -83,7 +83,7 @@ class TransactionChart extends React.Component {
             labels={function (datum){
               console.log('datum is: ', datum)
               console.log('totalSpent is: ', this.state.totalSpent)
-              var theAmount = Number(datum.yName.slice(1));
+              var theAmount = datum.y;
               if (Math.round(theAmount/this.state.totalSpent * 100) > 4) {
                 return Math.round(theAmount/this.state.totalSpent * 100) + '%';
                 }

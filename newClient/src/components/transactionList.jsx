@@ -8,13 +8,23 @@ class TransactionList extends React.Component {
   constructor(props) {
     super(props);
     this.pickCategories= this.pickCategories.bind(this);
+    this.changeAmountToNumbers= this.changeAmountToNumbers.bind(this);
     this.state = {
       transactions: null
     };
   }
 
+  changeAmountToNumbers(data) {
+    console.log('data in changeAmountToNumbers is: ', data);
+    for (var i = 0; i < data.length; i++) {
+      data[i].amount = Number(data[i].amount.slice(1));
+    }
+  }
+
   componentWillMount() {
     getTransactions((data) => {
+      console.log('data coming in from ajax call is: ', data)
+      this.changeAmountToNumbers(data.transaction)
       this.setState({
         transactions: data.transaction
       })
