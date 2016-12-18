@@ -7,7 +7,8 @@ import { getTransactions, postTransactions } from '../lib/ajax.js';
 class TransactionList extends React.Component {
   constructor(props) {
     super(props);
-    this.pickCategories= this.pickCategories.bind(this);
+    this.pickCategories = this.pickCategories.bind(this);
+    this.postTransactions = this.postTransactions.bind(this);
     this.state = {
       transactions: null
     };
@@ -18,6 +19,24 @@ class TransactionList extends React.Component {
       this.setState({
         transactions: data.transaction
       })
+    });
+  }
+
+  // getTransactions() {
+  //   getTransactions((data) => {
+  //     this.setState({
+  //       trans
+  //     })
+  //   }
+  // }
+
+  postTransactions(e) {
+    e.preventDefault();
+    postTransactions(e, (data) => {
+      getTransactions((data) => {
+        console.log(data);
+        this.setState({transactions: data.transaction});
+      });
     });
   }
 
@@ -59,7 +78,7 @@ class TransactionList extends React.Component {
           {this.state.transactions.map(owes => <TransactionListEntry getImage={this.pickCategories} entry={owes} />)}
           </tbody>
         </table>
-        <TransactionForm submit={postTransactions}/>
+        <TransactionForm submit={this.postTransactions}/>
       </div>
       );
     }

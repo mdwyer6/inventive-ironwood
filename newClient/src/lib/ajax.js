@@ -60,7 +60,6 @@ export function getLoansByType (type, cb) {
 }
 
 export function postTransactions(e, cb) {
-  e.preventDefault();
   $.ajax({
     url: '/api/transactions',
     method: 'POST',
@@ -71,7 +70,7 @@ export function postTransactions(e, cb) {
       amount: '$' + e.target.children[3].children[1].value,
     }),
     success: (data) => {
-      console.log('transaction was logged!');
+      cb(data)
     },
     error: (err) => {
       console.log('Error getting transactions');
@@ -95,6 +94,7 @@ export function getBudget(cb) {
 }
 
 export function postBudget(e) {
+  e.preventDefault();
   $.ajax({
     url: '/api/budget',
     method: 'POST',
