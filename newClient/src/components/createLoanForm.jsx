@@ -2,6 +2,7 @@ import React from 'react';
 import Autocomplete from 'react-autocomplete';
 import { styles } from '../lib/autocompleteStyles.js';
 import { filterUsers, createLoan } from '../lib/ajax.js';
+import { browserHistory } from 'react-router';
 
 class CreateLoanForm extends React.Component {
   constructor(props) {
@@ -28,7 +29,9 @@ class CreateLoanForm extends React.Component {
   transaction(e) {
     e.preventDefault();
     createLoan(this.state.userInput, this.state.memo, this.state.amount, e.target.name, (data) => {
-      this.setState({userInput: '', memo: '', amount: ''});
+      console.log('Go');
+      this.props.getLoans();
+      // this.setState({userInput: '', memo: '', amount: ''});
     });
   }
 
