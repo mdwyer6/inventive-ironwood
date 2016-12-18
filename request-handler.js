@@ -297,18 +297,35 @@ exports.deleteLoan = function(req, res) {
       // Not authorized
       res.sendStatus(403);
     }
-  });  
+  });
 };
 
 exports.getIavToken = function(req, res) {
-  dwolla.getUserId(req.session.user.email)
-  .then(createIavToken)
+  var newUser = new User({username: req.session.user.username}).fetch();
+  Promise.all([newUser])
+  .then(function(user) {
+    return dwolla.getUserId(user[0].attributes.email);
+  })
+  .then(function(userId) {
+    return dwolla.createIavToken(userId);
+  })
   .then(function(iavToken) {
     res.json(iavToken);
-  })
-  .catch(function(err) {
+  }).catch(function(err) {
     res.status(500).send(err);
   });
+  // dwolla.getUserId(req.session.user.email)
+  // .then(function(userId) {
+  //   console.log(userId);
+  //   return createIavToken(userId);
+  // })
+  // .then(function(iavToken) {
+  //   console.log(iavToken);
+  //   res.json(iavToken);
+  // })
+  // .catch(function(err) {
+  //   res.status(500).send(err);
+  // });
 };
 
 

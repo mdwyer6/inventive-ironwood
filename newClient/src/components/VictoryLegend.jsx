@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import VictoryLegendItem from './VictoryLegendItem.jsx';
 
-var VictoryLegend = (props) => {
-  return (
-    <div className='pieLegend'>
+/*<div className='pieLegend'>
       <div className='pieComponent'>
         <div className='pieLabel' id='pieLabel1'></div>
         <p className='pieCategory'>{props.data[0].category}</p>
@@ -41,6 +40,20 @@ var VictoryLegend = (props) => {
         <div className='pieLabel' id='pieLabel8'></div>
         <p className='pieCategory'>{props.data[7].category}</p>
       </div>
+    </div>*/
+
+/*{props.data.map( (transaction) => {
+      <VictoryLegendItem transaction={transaction}/>
+    } ) }*/
+
+var VictoryLegend = (props) => {
+  console.log('props.data is: ', props.data);
+  return (
+    <div className='pieLegend'>
+    {props.data.map( (transaction, index) => {
+      console.log('transaction is: ', transaction);
+      return <VictoryLegendItem transaction={transaction} index={index}/>
+    } )}
     </div>
   )
 }

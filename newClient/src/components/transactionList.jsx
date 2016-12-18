@@ -8,16 +8,58 @@ class TransactionList extends React.Component {
   constructor(props) {
     super(props);
     this.pickCategories= this.pickCategories.bind(this);
+    this.changeAmountToNumbers= this.changeAmountToNumbers.bind(this);
+    this.reformatData = this.reformatData.bind(this);
     this.state = {
-      transactions: null
+      transactions: null,
+      pieData: null,
+      isData: false
     };
+  }
+
+  changeAmountToNumbers(data) {
+    console.log('data in changeAmountToNumbers is: ', data);
+    for (var i = 0; i < data.length; i++) {
+      this.setState({
+        isData: true
+      })
+      if (typeof data[i].amount === 'string') {
+        data[i].amount = Number(data[i].amount.slice(1));
+      }
+    }
+    return data;
+  }
+
+  reformatData(data) {
+    var storeDataHere = {}
+    console.log('data in reformatData is: ', data);
+    for (var i = 0; i < data.length; i++) {
+      console.log('data[i].category is: ', data[i].category)
+      console.log('data[i].amount is: ', data[i].amount)
+      storeDataHere[data[i].category] = (storeDataHere[data[i].category] || 0) + data[i].amount
+    }
+    var resultData = [];
+    console.log('storeDataHere is: ', storeDataHere);
+    for (var key in storeDataHere) {
+      resultData.push(
+        {
+          category: key,
+          amount: storeDataHere[key]
+      })
+    }
+    console.log('resultData is: ', resultData);
+    return resultData;
   }
 
   componentWillMount() {
     getTransactions((data) => {
+      console.log('data coming in from ajax call is: ', data)
+      this.changeAmountToNumbers(data.transaction)
       this.setState({
-        transactions: data.transaction
+        transactions: data.transaction,
+        pieData: this.reformatData(this.changeAmountToNumbers(data.transaction))
       })
+      console.log('this.state.transactions is: ', this.state.transactions)
     });
   }
 
@@ -44,7 +86,7 @@ class TransactionList extends React.Component {
       return (
       <div className="spending">
         <h2>Transactions</h2>
-        <TransactionChart />
+        <TransactionChart isData={this.state.isData} data={this.state.pieData} />
         <table className="table">
           <thead id="spending-head">
             <tr>

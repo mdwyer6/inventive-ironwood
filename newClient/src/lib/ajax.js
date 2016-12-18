@@ -193,3 +193,13 @@ export function signup (username, password, firstname, lastname, email, address1
     error: (err) => console.log('AJAX error creating user', err)
   });
 }
+
+export function getIavToken(cb) {
+  $.ajax({
+    url: '/api/iavtoken',
+    method: 'GET',
+    contentType: 'application/json',
+    success: (data) => cb(data),
+    error: (err) => console.log('AJAX error creating IAV Token', err)
+  });
+}

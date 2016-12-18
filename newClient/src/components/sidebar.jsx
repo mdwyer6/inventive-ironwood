@@ -25,6 +25,9 @@ var Sidebar = (props) => {
       <li>
         <Link to='/transfer'>Transfer Funds</Link>
       </li>
+      <li>
+        <Link to='/addbankaccount'>Add Bank Account</Link>
+      </li>
       <br />
       <br />
       <br />
