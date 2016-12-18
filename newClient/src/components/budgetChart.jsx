@@ -79,39 +79,46 @@ class BudgetChart extends React.Component {
   }
 
   render() {
+    if (this.state.data && this.state.tickValues) {
+      if (this.state.data.length > 0) {
+        return (
+          <div>
+            <VictoryChart
+              responsive={false}
+              padding={{left:100, right: 100, top: 20, bottom: 60}}
+              theme={VictoryTheme.grayscale}
+              domainPadding={20}
+            >
+            <VictoryAxis
+                dependentAxis
+              />
+              <VictoryAxis
+                  tickValues={this.state.tickValues}
+                  tickFormat={(x) => (`${x / 1}%`)}
+                  style={{
+                    axisLabel: { padding: 30 }
+                  }}
+                />
+              <VictoryBar        
+                data={this.state.data}
+                x={"category"}
+                y={"percent"}
+                horizontal={true}
+                style={{
+                  data: {
+                    width: 25,
+                    padding: 1000
+                  }
+                }}
+              />
+            </VictoryChart>
+          </div>
+        );
+      }
+    }
     return (
-      <div>
-        <VictoryChart
-          responsive={false}
-          padding={{left:100, right: 100, top: 20, bottom: 60}}
-          theme={VictoryTheme.grayscale}
-          domainPadding={20}
-        >
-        <VictoryAxis
-            dependentAxis
-          />
-          <VictoryAxis
-              tickValues={this.state.tickValues}
-              tickFormat={(x) => (`${x / 1}%`)}
-              style={{
-                axisLabel: { padding: 30 }
-              }}
-            />
-          <VictoryBar        
-            data={this.state.data}
-            x={"category"}
-            y={"percent"}
-            horizontal={true}
-            style={{
-              data: {
-                width: 25,
-                padding: 1000
-              }
-            }}
-          />
-        </VictoryChart>
-      </div>
-    );
+      <div></div>
+    )
   }
 }
 

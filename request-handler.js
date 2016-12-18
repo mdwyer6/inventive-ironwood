@@ -9,6 +9,7 @@ var Budgets = require('./app/collections/budgets');
 var Budget = require('./app/models/budget');
 var dwolla = require('./dwolla/dwolla.js');
 var Promise = require('bluebird');
+var Loan = require('./app/models/loan.js');
 
 exports.currency = function(req, res) {
   request.get({url: 'http://api.fixer.io/latest?base=USD'}, function(error, response, body) {
@@ -31,7 +32,6 @@ exports.signin = function(req, res, next) {
       if (user.attributes.password === password) {
         req.session.regenerate(function() {
           req.session.user = user;
-          console.log(req.session.user);
           // res.location('/');
           res.json({authenticated: true});
         });
@@ -44,22 +44,29 @@ exports.signin = function(req, res, next) {
 };
 
 exports.signup = function(req, res) {
-  var username = req.body.username;
-  var password = req.body.password;
-  new User({username: username}).fetch().then(function(found) {
-    if (found) {
-      res.send('sorry, username taken');
-    } else {
-      Users.create({
-        username: username,
-        password: password
-      }).then(function(newUser) {
-        req.session.regenerate(function() {
-          req.session.user = newUser;
-          res.redirect('/');
+  dwolla.createVerifiedCustomer(req.body.firstName, req.body.lastName, req.body.email, req.ip, req.body.address1, req.body.address2, req.body.city, req.body.state, req.body.zip, req.body.dob, req.body.ssn)
+  .then(function() {
+    new User({username: req.body.username}).fetch().then(function(found) {
+      if (found) {
+        res.status(409).send('username already exists');
+      } else {
+        Users.create({
+          username: req.body.username,
+          password: req.body.password,
+          email: req.body.email,
+          firstName: req.body.firstName,
+          lastName: req.body.lastName
+        }).then(function(newUser) {
+          req.session.regenerate(function() {
+            req.session.user = newUser;
+            res.end();
+          });
         });
-      });
-    }
+      }
+    });
+  })
+  .catch(function(err) {
+    res.status(500).send(err);
   });
 };
 
@@ -90,7 +97,6 @@ exports.transactions = function(req, res) {
   var title = req.body.title;
   var amount = req.body.amount;
   // var userID = req.session.user.id;
-  console.log('id', req.session.user.id);
   Spendings.create({category: category, title: title, amount: amount, user_id: req.session.user.id})
   .then(function() {
     res.send('done');
@@ -99,7 +105,6 @@ exports.transactions = function(req, res) {
 
 exports.getDebts = function(req, res) {
   var param = {};
-  console.log('id', req.session.user.id);
   new Debt().query({where: {user_id: req.session.user.id}}).fetchAll().then(function(debt) {
     if (debt) {
       param.debt = debt.models;
@@ -111,7 +116,6 @@ exports.getDebts = function(req, res) {
 };
 
 exports.getTransactions = function(req, res) {
-  console.log('are we even getting here');
   var param = {};
   //console.log('id', req.session.user.id);
   new Spending().query({where: {user_id: req.session.user.id}}).fetchAll().then(function(transaction) {
@@ -129,7 +133,6 @@ exports.debts = function(req, res) {
   var person = req.body.person;
   var amount = req.body.amount;
   // var userID = req.session.user.id;
-  console.log('id', req.session.user.id);
   var personID;
   Debts.create({type: type, amount: amount, person: person, user_id: req.session.user.id})
     .then(function() {
@@ -252,10 +255,61 @@ exports.transfer = function(req, res) {
   });
 };
 
+exports.updateLoan = function(req, res) {
+  var userId = req.session.user.id;
+  if (req.body.confirmLoan) {
+    var id = req.body.confirmLoan.id;
+    var status = req.body.confirmLoan.status;
+    new Loan({id: id}).fetch()
+    .then(function(loan) {
+      if (!loan) {
+        res.sendStatus(400);
+      } else {
+        if (status === 'lenderConfirm' && loan.get('lenderId') === userId || status === 'borrowerConfirm' && loan.get('borrowerId') === userId) {
+          loan.set('status', 'active').save()
+          .then(function(loan) {
+            res.end();
+          });
+        } else {
+          // Not authorized
+          res.sendStatus(403);
+        }
+      }
+    });
+  } else {
+    res.sendStatus(400);
+  }
+};
 
+// Later refactor to look up status rather than getting from client for security reasons.
+exports.deleteLoan = function(req, res) {
+  var userId = req.session.user.id;
+  var loanId = req.body.id;
+  var status = req.body.status;
+  new Loan({id: loanId}).fetch()
+  .then(function(loan) {
+    if (status === 'lenderConfirm' && loan.get('lenderId') === userId || status === 'borrowerConfirm' && loan.get('borrowerId') === userId) {
+      loan.destroy()
+      .then(function(destroyedLoan) {
+        res.end();
+      });
+    } else {
+      // Not authorized
+      res.sendStatus(403);
+    }
+  });  
+};
 
-
-
+exports.getIavToken = function(req, res) {
+  dwolla.getUserId(req.session.user.email)
+  .then(createIavToken)
+  .then(function(iavToken) {
+    res.json(iavToken);
+  })
+  .catch(function(err) {
+    res.status(500).send(err);
+  });
+};
 
 
 

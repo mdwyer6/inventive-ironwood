@@ -15,7 +15,6 @@ export function filterUsers (userStr, cb) {
 }
 
 export function createLoan (otherUser, memo, amount, type, cb) {
-  console.log(amount);
   $.ajax({
     url: '/api/loans',
     method: 'POST',
@@ -119,6 +118,7 @@ export function postBudget(e) {
   });
 }
 
+
 export function getUser (cb) {
   $.ajax({
     url: '/api/user',
@@ -130,6 +130,28 @@ export function getUser (cb) {
     error: (err) => {
       console.log('Error getting user');
     }
+  });
+}
+
+export function changeLoanStatus(id, status, cb) {
+  $.ajax({
+    url: '/api/loans',
+    method: 'PUT',
+    contentType: 'application/json',
+    data: JSON.stringify({confirmLoan: {id: id, status: status}}),
+    success: (data) => cb(data),
+    error: (err) => console.log('AJAX error creating loan', err)
+  });
+}
+
+export function deleteLoan(id, status, cb) {
+  $.ajax({
+    url: '/api/loans',
+    method: 'DELETE',
+    contentType: 'application/json',
+    data: JSON.stringify({id: id, status: status}),
+    success: (data) => cb(data),
+    error: (err) => console.log('AJAX error deleting loan', err)
   });
 }
 
@@ -145,5 +167,29 @@ export function transferFunds (username, memo, amount, cb) {
     }),
     success: (data) => cb(data),
     error: (err) => console.log('AJAX error creating transfer', err)
+  });
+}
+
+export function signup (username, password, firstname, lastname, email, address1, address2, city, state, zip, dob, ssn, cb) {
+  $.ajax({
+    url: '/api/signup',
+    method: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify({
+      username: username,
+      password: password,
+      firstName: firstname,
+      lastName: lastname,
+      email: email,
+      address1: address1,
+      address2: address2,
+      city: city,
+      state: state,
+      zip: zip,
+      dob: dob,
+      ssn: ssn
+    }),
+    success: (data) => cb(data),
+    error: (err) => console.log('AJAX error creating user', err)
   });
 }
