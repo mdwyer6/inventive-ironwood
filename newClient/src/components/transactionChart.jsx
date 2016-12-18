@@ -6,7 +6,6 @@ import VictoryLegend from './VictoryLegend.jsx';
 class TransactionChart extends React.Component {
   constructor(props) {
     super(props);
-    console.log('this.props.data is: ', this.props.data);
     this.calculateSpending = this.calculateSpending.bind(this);
     this.state = {
       realData: [
@@ -77,8 +76,6 @@ class TransactionChart extends React.Component {
             height={250}
             padding={0}
             labels={function (datum){
-              console.log('datum is: ', datum)
-              console.log('totalSpent is: ', this.state.totalSpent)
               var theAmount = datum.y;
               if (Math.round(theAmount/this.state.totalSpent * 100) > 4) {
                 return Math.round(theAmount/this.state.totalSpent * 100) + '%';

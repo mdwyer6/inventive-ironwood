@@ -71,7 +71,7 @@ export function postTransactions(e, cb) {
       amount: '$' + e.target.children[3].children[1].value,
     }),
     success: (data) => {
-      console.log('transaction was logged!');
+      return;
     },
     error: (err) => {
       console.log('Error getting transactions');
@@ -110,7 +110,7 @@ export function postBudget(e) {
       other: e.target.children[8].children[1].value
     }),
     success: (data) => {
-      console.log('Budget was logged!');
+      return;
     },
     error: (err) => {
       console.log('Error getting transactions');
