@@ -65,7 +65,7 @@ class TransactionList extends React.Component {
     } else if (category === 'Groceries') {
       return 'http://image.flaticon.com/icons/png/512/2/2772.png';
     } else if (category === 'Utilities') {
-      return 'http://www.iconsdb.com/icons/preview/black/house-xxl.png';
+      return 'https://openclipart.org/image/2400px/svg_to_png/217511/1429747035.png';
     } else if (category === 'Nightlife') {
       return 'http://www.clker.com/cliparts/I/n/S/M/8/z/cocktail-md.png';
     } else if (category === 'Other') {
@@ -79,6 +79,7 @@ class TransactionList extends React.Component {
       <div className="spending">
         <h2>Transactions</h2>
         <TransactionChart isData={this.state.isData} data={this.state.pieData} />
+        <TransactionForm submit={postTransactions}/>
         <table className="table">
           <thead id="spending-head">
             <tr>
@@ -93,7 +94,6 @@ class TransactionList extends React.Component {
           {this.state.transactions.map(owes => <TransactionListEntry getImage={this.pickCategories} entry={owes} />)}
           </tbody>
         </table>
-        <TransactionForm submit={postTransactions}/>
       </div>
       );
     }
