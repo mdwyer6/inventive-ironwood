@@ -12,12 +12,18 @@ class ConfirmDelete extends React.Component {
 
   updateLoanHandler(e) {
     e.preventDefault();
-    changeLoanStatus(this.props.loan._pivot_id, this.props.loan._pivot_status, (data) => console.log('changeLoanSuccess'));
+    changeLoanStatus(this.props.loan.id, this.props.loan.status, (data) => {
+      this.props.getLoans();
+      console.log('changeLoanSuccess');
+    });
   }
 
   deleteLoanHandler(e) {
     e.preventDefault();
-    deleteLoan(this.props.loan._pivot_id, this.props.loan._pivot_status, (data) => console.log('Delete loan success'));
+    deleteLoan(this.props.loan.id, this.props.loan.status, (data) => {
+      this.props.getLoans();
+      console.log('deleteLoanSuccess');
+    });
   }
 
   render() {
@@ -41,6 +47,7 @@ class LoanList extends React.Component {
     super(props);
     this.getLoans = this.getLoans.bind(this);
     this.statusFormatter = this.statusFormatter.bind(this);
+    this.nameFormatter = this.nameFormatter.bind(this);
   }
 
   getLoans(e) {
@@ -55,7 +62,7 @@ class LoanList extends React.Component {
       );
     } else if (this.props.type === 'toCollect' && cell === 'lenderConfirm' || this.props.type === 'toPayback' && cell === 'borrowerConfirm') {
       return (
-        <ConfirmDelete loan={row} />
+        <ConfirmDelete getLoans={this.props.getLoans} loan={row} />
       );
     } else if (cell === 'active') {
       return (
@@ -64,7 +71,19 @@ class LoanList extends React.Component {
     }
   }
 
+  nameFormatter(cell, row) {
+    var name = cell.firstName + ' ' + cell.lastName;
+    var capitalized = name.replace(/(^|\s)[a-z]/g, function(f){ return f.toUpperCase(); });
+    return capitalized;
+  }
+
   render() {
+    if (this.props.type === 'toCollect') {
+      var who = 'borrower';
+    } else {
+      var who = 'lender';
+    }
+
     return (
       <div>
         <Tab.Container id="tabs-with-dropdown" defaultActiveKey={1}>
@@ -79,11 +98,11 @@ class LoanList extends React.Component {
 
             <Col sm={12}>
               <BootstrapTable data={this.props.loans} striped hover condensed>
-                <TableHeaderColumn dataField='_pivot_date' isKey dataSort>Date</TableHeaderColumn>
-                <TableHeaderColumn dataField='username' dataSort>Who</TableHeaderColumn>
-                <TableHeaderColumn dataField='_pivot_memo' dataSort>Memo</TableHeaderColumn>
-                <TableHeaderColumn dataField='_pivot_loanAmount' dataFormat={currencyFormatter} dataSort>Total</TableHeaderColumn>
-                <TableHeaderColumn dataField='_pivot_status' dataFormat={ this.statusFormatter } dataSort>Status</TableHeaderColumn>
+                <TableHeaderColumn dataField='date' isKey dataSort>Date</TableHeaderColumn>
+                <TableHeaderColumn dataField={who} dataFormat={this.nameFormatter} dataSort>Who</TableHeaderColumn>
+                <TableHeaderColumn dataField='memo' dataSort>Memo</TableHeaderColumn>
+                <TableHeaderColumn dataField='loanAmount' dataFormat={currencyFormatter} dataSort>Total</TableHeaderColumn>
+                <TableHeaderColumn dataField='status' dataFormat={ this.statusFormatter } dataSort>Status</TableHeaderColumn>
                 {/* <TableHeaderColumn dataField='username' isKey>Balance Due</TableHeaderColumn> */}
               </BootstrapTable>
             </Col>
