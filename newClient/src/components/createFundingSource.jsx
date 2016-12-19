@@ -15,8 +15,8 @@ class CreateFundingSource extends React.Component {
       dwolla.configure('uat');
       dwolla.iav.start(token, {container: 'iavContainer', microDeposts: false, fallbackToMicrodeposits: true}, (err, res) => {
         console.log('Error: ' + JSON.stringify(err) + ' -- Response: ' + JSON.stringify(res));
-        component.setState({loading: false});
       });
+      component.setState({loading: false});
     });
   }
 
