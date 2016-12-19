@@ -16,7 +16,7 @@ exports.currency = function(req, res) {
     if (!error) {
       res.send(JSON.parse(body));
     } else {
-      console.log('error');
+      res.sendStatus(400);
     }
   });
 };
@@ -26,17 +26,14 @@ exports.signin = function(req, res, next) {
   var password = req.body.password;
   new User({username: username }).fetch().then(function(user) {
     if (!user) {
-      console.log('user not found');
       res.sendStatus(403);
     } else {
       if (user.attributes.password === password) {
         req.session.regenerate(function() {
           req.session.user = user;
-          // res.location('/');
           res.json({authenticated: true});
         });
       } else {
-        console.log('password not correct');
         res.sendStatus(403);
       }
     }
@@ -77,18 +74,23 @@ exports.check = function(req, res, next) {
     next();
   }
 };
+
 exports.logout = function(req, res) {
   req.session.destroy(function() {
     res.redirect('/signin');
-    console.log('logout');
   });
 };
+
+exports.getUser = function(req, res) {
+  new User({id: req.session.user.id}).fetch().then(function(user) {
+    res.json(user.attributes.username);
+  });
+}
 
 exports.transactions = function(req, res) {
   var category = req.body.category;
   var title = req.body.title;
   var amount = req.body.amount;
-  // var userID = req.session.user.id;
   Spendings.create({category: category, title: title, amount: amount, user_id: req.session.user.id})
   .then(function() {
     res.send('done');
@@ -100,7 +102,6 @@ exports.getDebts = function(req, res) {
   new Debt().query({where: {user_id: req.session.user.id}}).fetchAll().then(function(debt) {
     if (debt) {
       param.debt = debt.models;
-      console.log(param.debt);
     }
   }).then(function() {
     res.send(param);
@@ -109,11 +110,9 @@ exports.getDebts = function(req, res) {
 
 exports.getTransactions = function(req, res) {
   var param = {};
-  //console.log('id', req.session.user.id);
   new Spending().query({where: {user_id: req.session.user.id}}).fetchAll().then(function(transaction) {
     if (transaction) {
       param.transaction = transaction.models;
-      console.log(param.transaction);
     }
   }).then(function() {
     res.send(param);
@@ -124,7 +123,6 @@ exports.debts = function(req, res) {
   var type = req.body.type;
   var person = req.body.person;
   var amount = req.body.amount;
-  // var userID = req.session.user.id;
   var personID;
   Debts.create({type: type, amount: amount, person: person, user_id: req.session.user.id})
     .then(function() {
@@ -133,7 +131,6 @@ exports.debts = function(req, res) {
 };
 
 exports.getBudget = function(req, res) {
-  console.log
   new Budget({user_id: req.session.user.id}).fetch().then(function(budget) {
     res.json(budget);
   });
@@ -155,7 +152,6 @@ exports.createBudget = function(req, res) {
 
   Budgets.create(data)
     .then(function() {
-      console.log('budget added to db');
       res.send('done');
     });
 }
@@ -179,7 +175,6 @@ exports.filterUsers = function(req, res) {
 };
 
 exports.createLoan = function(req, res) {
-  console.log('loanAmount', req.session.user.username);
   if (req.body.type === 'loan') {
     var lender = req.session.user.username;
     var borrower = req.body.otherUser;
@@ -239,11 +234,9 @@ exports.transfer = function(req, res) {
     return dwolla.transferMoney(senderFundId, payeeFundId, req.body.amount);
   })
   .then(function(response) {
-    console.log('Transfer success');
     res.json(response);
   })
   .catch(function(err) {
-    console.log('Error transferring money:', err);
     res.sendStatus(500);
   });
 };
@@ -264,7 +257,6 @@ exports.updateLoan = function(req, res) {
             res.end();
           });
         } else {
-          // Not authorized
           res.sendStatus(403);
         }
       }

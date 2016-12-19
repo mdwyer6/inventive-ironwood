@@ -1,9 +1,6 @@
 import React from 'react';
 import moment from 'moment';
 
-//Must decide where we are storing ajax calls
-//import Requests from '../requests.js'
-
 var TransactionListEntry = (props) => {
   return (
     <tr>

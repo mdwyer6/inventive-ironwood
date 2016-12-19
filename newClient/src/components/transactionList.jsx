@@ -18,7 +18,6 @@ class TransactionList extends React.Component {
   }
 
   changeAmountToNumbers(data) {
-    console.log('data in changeAmountToNumbers is: ', data);
     for (var i = 0; i < data.length; i++) {
       this.setState({
         isData: true
@@ -32,14 +31,10 @@ class TransactionList extends React.Component {
 
   reformatData(data) {
     var storeDataHere = {}
-    console.log('data in reformatData is: ', data);
     for (var i = 0; i < data.length; i++) {
-      console.log('data[i].category is: ', data[i].category)
-      console.log('data[i].amount is: ', data[i].amount)
       storeDataHere[data[i].category] = (storeDataHere[data[i].category] || 0) + data[i].amount
     }
     var resultData = [];
-    console.log('storeDataHere is: ', storeDataHere);
     for (var key in storeDataHere) {
       resultData.push(
         {
@@ -47,19 +42,16 @@ class TransactionList extends React.Component {
           amount: storeDataHere[key]
       })
     }
-    console.log('resultData is: ', resultData);
     return resultData;
   }
 
   componentWillMount() {
     getTransactions((data) => {
-      console.log('data coming in from ajax call is: ', data)
       this.changeAmountToNumbers(data.transaction)
       this.setState({
         transactions: data.transaction,
         pieData: this.reformatData(this.changeAmountToNumbers(data.transaction))
       })
-      console.log('this.state.transactions is: ', this.state.transactions)
     });
   }
 
@@ -107,7 +99,7 @@ class TransactionList extends React.Component {
     }
 
     return (
-      <div>Loading... </div>
+      <div></div>
     )
   }
 }
