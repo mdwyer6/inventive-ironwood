@@ -199,16 +199,22 @@ exports.createLoan = function(req, res) {
 exports.getLoansByType = function(req, res) {
   var whichLoans = req.params.which;
   if (whichLoans === 'toCollect') {
-    var relatedStr = 'loansToCollect';
+    var searchBy = 'lenderId';
+    var withRelated = {withRelated: ['borrower']};
   } else if (whichLoans === 'toPayback') {
-    var relatedStr = 'loansToPayback';
+    var searchBy = 'borrowerId';
+    var withRelated = {withRelated: ['lender']};
   }
   var userId = req.session.user.id;
-  new User({id: userId})
-    .fetch({withRelated: ['loansToCollect', 'loansToPayback']})
-    .then(function(user) {
-      res.json(user.related(relatedStr).toJSON());
-    });
+
+  var query = {};
+  console.log(searchBy, userId);
+  query[searchBy] = userId;
+
+  new Loan().where(query).fetchAll(withRelated)
+  .then(function(loans) {
+    res.json(loans);
+  });
 };
 
 exports.transfer = function(req, res) {
