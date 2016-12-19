@@ -14,7 +14,7 @@ var Sidebar = (props) => {
        <p className='username'>{props.username}</p>
       </li>
       <li>
-        <Link to='/transactions'>Transactions</Link>
+        <Link to='/transactions'>Expenses</Link>
       </li>
       <li>
         <Link to='/budget'>Budget</Link>

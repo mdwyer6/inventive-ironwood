@@ -3,7 +3,7 @@ import React from 'react';
 var TransactionForm = (props) => {
   return (
   <form className='form-inline' onSubmit={props.submit}>
-    <h3>Add Transaction</h3>
+    <h3>Add Expense</h3>
     <div className='form-group'>
       <select className="custom-select">
         <option value="Restaurant">Restaurant</option>
