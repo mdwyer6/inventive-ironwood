@@ -11,7 +11,7 @@ import Signin from './components/Signin.jsx';
 import Signup from './components/Signup.jsx';
 import NotFound from './components/NotFound.jsx';
 import Budget from './components/budgetForm.jsx';
-import Transactions from './components/transactionList.jsx';
+import Transactions from './components/transactionView.jsx';
 import Loans from './components/loans.jsx';
 import TransferFunds from './components/transferFunds.jsx';
 import CreateFundingSource from './components/createFundingSource.jsx';
