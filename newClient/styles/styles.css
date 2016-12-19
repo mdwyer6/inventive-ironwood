@@ -446,6 +446,11 @@ img { max-width: 100%; }
     text-align: center;
 }
 
+.transaction-chart {
+    margin-top: 30px;
+    display: block;
+}
+
 /***** Media queries *****/
 
 @media (min-width: 992px) and (max-width: 1199px) {}
